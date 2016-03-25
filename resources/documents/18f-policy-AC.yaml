@@ -1,0 +1,37 @@
+id: 18f-policy-AC
+title: 18F Access control Policy
+url: https://github.com/18F/compliance-docs/blob/master/AC-Policy.md
+format: markdown
+security-controls:
+- AC
+terms:
+- term: 18F
+- term: Access control Policy
+- term: computing resources
+- term: unauthorized access
+- term: informational assets
+- term: access control practices
+- term: 18F Production environment
+- term: General Availability
+- term: Federal Information Processing Standards (FIPS)
+- term: National Institute of Standards and Technology (NIST) Special Publications
+- term: International Organization for Standards (ISO)
+- term: logical access
+- term: separation of duties
+  defined-by:
+    document: nist-800-53
+    term: Separation of Duties
+- term: least privilege
+  defined-by:
+    document: nist-800-53
+    term: Least Privilege
+- term: store
+- term: Security Operations
+  role: definition
+- term: Development Operations
+  role: definition
+- term: Senior Director
+  role: definition
+- term: Director of Compliance
+  role: definition
+owner: 18F
