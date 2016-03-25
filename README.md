@@ -46,4 +46,4 @@ A term-reference is a way of locating a term within a document. A term-reference
 
 `document`: The identifier (`id`) of the document where the referenced term occurs. If this attribute is missing, then a term is being referenced in the same document that the YAML file is describing --- i.e. to `same-as` two terms that appear in the same document.
 
-`term`: The text of the term as it appears in that document. 
+`term`: The text of the term as it appears in that document. If omitted in a parent `term`, the term appears with the same words in the referenced document.

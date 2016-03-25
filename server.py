@@ -7,6 +7,13 @@ from flask import Flask, request, render_template, jsonify
 app = Flask(__name__)
 app.config.from_object(__name__)
 
+# Map all resource IDs to the data about them.
+all_resources = { }
+for fn in glob.glob("resources/*/*.yaml"):
+	with open(fn) as f:
+		res = rtyaml.load(f)
+		all_resources[res['id']] = res
+
 @app.route('/')
 def show_demo_page():
     return render_template('api-demo.html')
@@ -38,10 +45,10 @@ def search_documents():
 	)
 
 def iter_docs():
-	# iterate through all of the YAML files on disk
-	for fn in glob.glob("resources/documents/*.yaml"):
-		with open(fn) as f:
-			yield rtyaml.load(f)
+	# iterate through all of the resources that represent documents
+	for res in all_resources.values():
+		if res["type"] == "policy-document":
+			yield res
 
 # search
 
@@ -60,7 +67,11 @@ def doc_matches_query(query, doc):
 
 	# does the query match any terms?
 	for term in doc.get('terms', []):
-		for ctx in field_matches_query(query, term['term']):
+		contexts = []
+
+		# does the query match the term as it appears here, or as it appears in a
+		# referenced document?
+		for ctx in term_matches_query_recursively(query, doc, term):
 			context.append({
 				"where": "term",
 				"text": ctx,
@@ -79,9 +90,50 @@ def field_matches_query(query, value):
 	# HTML-formatted context strings showing the matched query text
 
 	r = "".join( [(re.escape(c) if re.match(r"[a-zA-Z0-9]", c) else ".?" ) for c in query] )
-	for m in re.finditer(r, value, re.I):
+	for m in re.finditer("(?:^|\W)" + r, value, re.I):
 		start, end = m.span()
 		yield cgi.escape(value[max(start-50, 0):start]) + "<b>" + cgi.escape(value[start:end]) + "</b>" + cgi.escape(value[end:end+50])
+
+def term_matches_query_recursively(query, document, term, path=[], seen=set()):
+	# Does it match the term specified here?
+	for ctx in field_matches_query(query, term['term']):
+		yield ctx + ((" <span class='from-cited-document'>" + cgi.escape("-->".join(path)) + "</span>") if path else "")
+		return # only match once per term
+
+	# Look recursively at any referenced terms if it didn't match exactly here.
+	for relation in ('defined-by', 'same-as'):
+		if not relation in term: continue
+
+		# How to describe this relation?
+		if relation == "defined-by":
+			relation_descr = "is defined by"
+		else:
+			relation_descr = "has same meaning as"
+
+		# Look up the document & term referenced.
+
+		if 'document' in term[relation]:
+			# prevent infinite loops
+			if term[relation]['document'] in seen:
+				raise ValueError("cycle in term references")
+			refdoc = all_resources[term[relation]['document']]
+		else:
+			refdoc = document
+
+		if 'term' in term[relation]:
+			refterm = term[relation]['term']
+		else:
+			refterm = term['term']
+
+		# Ok, find it.
+
+		ref = next(filter(lambda t : t['term'] == refterm, refdoc['terms']))
+
+		for ctx in term_matches_query_recursively(query, refdoc, ref,
+			path + ["“" + term['term'] + "” in " + document['id'] + " " + relation_descr + " term in " + refdoc['id']],
+			seen | set([refdoc['id']])):
+			yield ctx
+
 
 def get_thumbnail_url(doc, pagenumber, small):
 	# If the document has a DocumentCloud ID, then generate the URL to the thumbnail for
@@ -100,6 +152,7 @@ def get_page_url(doc, pagenumber):
 		return "https://assets.documentcloud.org/documents/%s/%s.pdf#page=%d" % (
 			m.group(1), m.group(2), pagenumber)
 	return None
+
 
 # main entry point
 

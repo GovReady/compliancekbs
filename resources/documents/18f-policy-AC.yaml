@@ -17,6 +17,10 @@ terms:
 - term: National Institute of Standards and Technology (NIST) Special Publications
 - term: International Organization for Standards (ISO)
 - term: logical access
+- term: separates duties
+  defined-by:
+    document: nist-800-53
+    term: Separation of Duties
 - term: separation of duties
   defined-by:
     document: nist-800-53
@@ -28,6 +32,9 @@ terms:
 - term: store
 - term: Security Operations
   role: definition
+  defined-by:
+    document: nist-800-39
+    term: Information System Security Officer
 - term: Development Operations
   role: definition
 - term: Senior Director
@@ -35,3 +42,4 @@ terms:
 - term: Director of Compliance
   role: definition
 owner: 18F
+type: policy-document

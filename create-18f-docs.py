@@ -16,6 +16,7 @@ for controlid in ("AC", "AT", "AU", "CA", "CM", "CP", "IA", "IR", "PL", "PS", "R
 		with open(fn,) as f:
 			doc = rtyaml.load(f.read()) or OrderedDict()
 
+	doc["type"] = "policy-document"
 	doc["id"] = "18f-policy-" + controlid
 
 	md = urllib.request.urlopen("https://raw.githubusercontent.com/18F/compliance-docs/master/%s-Policy.md" % controlid).read().decode("utf8")
