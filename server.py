@@ -1,4 +1,5 @@
-import sys, os, os.path, glob, re, cgi
+import sys, os, os.path, glob, re, cgi, datetime, json
+import sqlite3
 
 import rtyaml
 
@@ -6,6 +7,7 @@ from flask import Flask, request, render_template, jsonify
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+def get_access_log(): return sqlite3.connect('access_log.db')
 
 # Map all resource IDs to the data about them.
 all_resources = { }
@@ -13,6 +15,19 @@ for fn in glob.glob("resources/*/*.yaml"):
 	with open(fn) as f:
 		res = rtyaml.load(f)
 		all_resources[res['id']] = res
+
+def create_db_tables(access_log):
+	# Create database tables on first run..
+	c = access_log.cursor()
+	for table_name, table_def in [
+		("query_log", "query_time datetime, query text, documents_matched text")
+	]:
+		try:
+			c.execute("CREATE TABLE %s (%s)" % (table_name, table_def))
+		except sqlite3.OperationalError as e:
+			if ("table %s already exists" % table_name) not in str(e):
+				raise e
+	access_log.commit()
 
 @app.route('/')
 def show_demo_page():
@@ -38,6 +53,15 @@ def search_documents():
 				"link": doc.get("url") or get_page_url(doc, 1), # if url not specified on document, get from DocumentCloud id
 				"thumbnail": get_thumbnail_url(doc, 1, True),
 			})
+
+	# log this query
+	cur = get_access_log().cursor()
+	cur.execute("INSERT INTO query_log values (?, ?, ?)", (
+		datetime.datetime.utcnow(),
+		q,
+		json.dumps([result["document"]["id"] for result in docs]),
+	))
+	cur.connection.commit()
 
 	# return JSON of all search results
 	return jsonify(
@@ -181,5 +205,7 @@ def get_page_url(doc, pagenumber):
 # main entry point
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run(port=8000)
+	create_db_tables(get_access_log())
+	app.debug = True
+	app.run(port=int(os.environ.get("PORT", "8000")))
+

@@ -12,6 +12,10 @@ Then start using:
 
     python3 server.py
 
+Or in production:
+
+	sudo PORT=80 python3 server.py
+
 YAML schema
 -----------
 
