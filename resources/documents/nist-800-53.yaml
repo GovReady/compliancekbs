@@ -7,12 +7,12 @@ authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-53r4
 doi: doi:10.6028/NIST.SP.800-37r1
 terms:
 - term: Separation of Duties
-  role: definition
+  usage: definition
   page: 175
   same-as:
     term: "AC-5"
 - term: Least Privilege
-  role: definition
+  usage: definition
   page: 175
   same-as:
     term: "AC-6"

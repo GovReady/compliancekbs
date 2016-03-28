@@ -31,15 +31,15 @@ terms:
     term: Least Privilege
 - term: store
 - term: Security Operations
-  role: definition
+  usage: definition
   defined-by:
     document: nist-800-39
     term: Information System Security Officer
 - term: Development Operations
-  role: definition
+  usage: definition
 - term: Senior Director
-  role: definition
+  usage: definition
 - term: Director of Compliance
-  role: definition
+  usage: definition
 owner: 18F
 type: policy-document

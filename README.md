@@ -41,7 +41,7 @@ A term is a phrase that appears in a document. It has the following attributes:
 
 `page`: The primary page on which it appears in the document (e.g. where it is defined, if applicable).
 
-`role`: This attribute has the value `definition` if the term is defined within this document.
+`purpose`: This field has the value `definition` if the term is defined within this document (and if  `page` is specified, then on that page).
 
 `defined-by`: A `term-reference` (see below) to where this term is defined.
 
