@@ -2,6 +2,7 @@ type: authoritative-document
 id: nist-800-53
 title: NIST Special Publication 800-53 Revision 4
 owner: NIST
+short-title: NIST SP 800-53r4
 url: https://www.documentcloud.org/documents/2752694-NIST-SP-800-53r4.html
 authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-53r4
 doi: doi:10.6028/NIST.SP.800-37r1

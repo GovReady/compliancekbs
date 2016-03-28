@@ -71,10 +71,10 @@ def doc_matches_query(query, doc):
 
 		# does the query match the term as it appears here, or as it appears in a
 		# referenced document?
-		for ctx in term_matches_query_recursively(query, doc, term):
+		for path in term_matches_query_recursively(query, doc, term):
 			context.append({
 				"where": "term",
-				"text": ctx,
+				"text": format_query_context_path(path),
 				"term": term,
 				"thumbnail": get_thumbnail_url(doc, term['page'], True) if 'page' in term else None,
 				"link": get_page_url(doc, term['page']) if 'page' in term else None,
@@ -94,10 +94,10 @@ def field_matches_query(query, value):
 		start, end = m.span()
 		yield cgi.escape(value[max(start-50, 0):start]) + "<b>" + cgi.escape(value[start:end]) + "</b>" + cgi.escape(value[end:end+50])
 
-def term_matches_query_recursively(query, document, term, path=[], seen=set()):
+def term_matches_query_recursively(query, document, term, relation_to=None, seen=set()):
 	# Does it match the term specified here?
 	for ctx in field_matches_query(query, term['term']):
-		yield ctx + ((" <span class='from-cited-document'>" + cgi.escape("-->".join(path)) + "</span>") if path else "")
+		yield [(ctx, document, relation_to)]
 		return # only match once per term
 
 	# Look recursively at any referenced terms if it didn't match exactly here.
@@ -105,12 +105,15 @@ def term_matches_query_recursively(query, document, term, path=[], seen=set()):
 		if not relation in term: continue
 
 		# How to describe this relation?
+
 		if relation == "defined-by":
 			relation_descr = "is defined by"
 		else:
 			relation_descr = "has same meaning as"
 
-		# Look up the document & term referenced.
+		# Look up the document that the term is referenced in. The `document`
+		# field specifies a document ID, or, if omitted, the current document
+		# is used.
 
 		if 'document' in term[relation]:
 			# prevent infinite loops
@@ -120,19 +123,40 @@ def term_matches_query_recursively(query, document, term, path=[], seen=set()):
 		else:
 			refdoc = document
 
+		# Get the text of the term as it appears in the referenced document.
+		# The `term` field specifies the text of the term as it appears in
+		# the referenced document. If `term` is omitted, the term has the
+		# same text in the referenced document as in the current document.
+
 		if 'term' in term[relation]:
 			refterm = term[relation]['term']
 		else:
 			refterm = term['term']
 
-		# Ok, find it.
+		# Find the term information in the referenced document.
 
 		ref = next(filter(lambda t : t['term'] == refterm, refdoc['terms']))
 
-		for ctx in term_matches_query_recursively(query, refdoc, ref,
-			path + ["“" + term['term'] + "” in " + document['id'] + " " + relation_descr + " term in " + refdoc['id']],
-			seen | set([refdoc['id']])):
-			yield ctx
+		# See if that term matches this query.
+
+		for ctx in term_matches_query_recursively(query, refdoc, ref, relation_to=relation_descr, seen=seen | set([refdoc['id']])):
+			yield [(cgi.escape(term["term"]), document, relation_to)] + ctx
+
+def format_query_context_path(path):
+	ret = path.pop(0)[0]
+	first = True
+	if len(path) > 0:
+		ret += " <span class=\"from-cited-document\">"
+		while len(path) > 0:
+			if first:
+				ret += "term " # as in, "term is defined by..."
+				first = False
+			else:
+				ret += ", which "
+			context, document, relation_descr = path.pop(0)
+			ret += cgi.escape(relation_descr) + " “" + context + "” in " + cgi.escape(document.get("short-title", document["id"]))
+		ret += "</span>"
+	return ret
 
 
 def get_thumbnail_url(doc, pagenumber, small):

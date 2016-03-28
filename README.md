@@ -23,6 +23,8 @@ Each YAML file describes a document. Documents have the following fields:
 
 `title`: The display title of the document.
 
+`short-title`: A short form display title of the document.
+
 `url`: The preferred URL where the document can be viewed. This is a link for humans. We recognize URLs that look like `https://www.documentcloud.org/documents/###-____.html` for displaying thumbnails from DocumentCloud.
 
 `authoritative-url`: A link to the authoritative copy of a document, i.e. as published by the document owner. The URL should return a direct download link for a file in the format given in the `format` document property.
