@@ -172,8 +172,7 @@
                 node.find('.owner span').text(result.document.owner);
 
                 // thumbnail
-                if (result.thumbnail)
-                    node.find('img').attr('src', result.thumbnail);
+                node.find('img').attr('src', result.thumbnail || "/static/no-thumbnail.png");
 
                 // context
                 result.context.forEach(function(item) {
