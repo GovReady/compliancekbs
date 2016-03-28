@@ -2,7 +2,7 @@ import sys, os, os.path, glob, re, cgi, datetime, json
 import urllib.request
 import sqlite3
 
-import rtyaml
+import rtyaml, CommonMark
 
 from flask import Flask, request, render_template, jsonify
 
@@ -204,8 +204,7 @@ def query_documentcloud_api(documentcloud_id):
 	return json.loads(urllib.request.urlopen("https://www.documentcloud.org/api/documents/%s-%s.json" % documentcloud_id).read().decode("utf8"))
 
 def get_thumbnail_url(doc, pagenumber, small):
-	# If the document has a DocumentCloud ID, then generate the URL to the thumbnail for
-	# its first page.
+	# If the document is on DocumentCloud, get the URL to DocumentCloud's thumbnail image.
 	documentcloud_id = get_documentcloud_document_id(doc)
 	if documentcloud_id:
 		# We can use the DocumentCloud API to get the URL to a thumbnail, but in the
@@ -216,6 +215,16 @@ def get_thumbnail_url(doc, pagenumber, small):
 		#)
 		return "https://assets.documentcloud.org/documents/%s/pages/%s-p%d-%s.gif" % (
 			documentcloud_id[0], documentcloud_id[1], pagenumber, "small" if small else "normal")
+
+	# If it's a Markdown document, download it, convert it to HTML, then render it to
+	# an image, and return that image as a data: URL.
+	elif doc.get("format") == "markdown" and os.path.exists("/usr/bin/wkhtmltoimage"):
+		md = get_page_text(doc, pagenumber)
+		if md:
+			import subprocess, base64
+			return "data:image/jpeg;base64," + base64.b64encode(
+				subprocess.check_output(["/usr/bin/wkhtmltoimage", "--no-images", "--disable-javascript", "--disable-local-file-access", "--width", "300", "--height", "412", "-", "-"],
+					input=CommonMark.commonmark(md).encode("utf8"))).decode("ascii")
 	return None
 
 def get_page_url(doc, pagenumber):
@@ -246,7 +255,7 @@ def get_page_text(doc, pagenumber):
 		# Download the document to get its contents. There is only one page
 		# in a Markdown document.
 		return urllib.request.urlopen(doc.get("authoritative-url")).read().decode("utf8")
-		
+
 	return None
 
 # main entry point

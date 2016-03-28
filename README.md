@@ -4,9 +4,12 @@ Compliance Knowledge Base Service for Security Controls Compliance Server
 API server
 ----------
 
-The API server requires python3. Install dependencies:
+The API server requires python3 and some dependencies:
 
+	sudo apt-get install wkhtmltopdf
     pip3 install -r requirements.txt
+
+(`wkhtmltopdf` is for generating thumbnails of Markdown documents.)
 
 Then start using:
 
