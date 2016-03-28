@@ -182,7 +182,7 @@
                         tb.find('img').attr('src', item.thumbnail)
                         node.find('.context').append(tb);
                     }
-                    var text = $("<p>").html(item.text); // we're getting back an HTML snippet
+                    var text = $("<p class='clearfix'/>").html(item.text); // we're getting back an HTML snippet
                     node.find('.context').append(text);
                 });
             }
