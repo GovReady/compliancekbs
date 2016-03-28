@@ -2,7 +2,8 @@ type: policy-document
 id: nist-800-39
 title: NIST Special Publication 800-39
 owner: NIST
-document-cloud-id: 2764682-SP800-39-Final
+url: https://www.documentcloud.org/documents/2764682-SP800-39-Final.html
+authoritative-url: http://csrc.nist.gov/publications/nistpubs/800-39/SP800-39-final.pdf
 terms:
 - term: Information System Security Officer
   page: 77

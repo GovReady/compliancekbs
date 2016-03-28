@@ -47,7 +47,7 @@ def search_documents():
 def iter_docs():
 	# iterate through all of the resources that represent documents
 	for res in all_resources.values():
-		if res["type"] == "policy-document":
+		if res["type"] in ("authoritative-document", "policy-document"):
 			yield res
 
 # search
@@ -138,7 +138,7 @@ def term_matches_query_recursively(query, document, term, path=[], seen=set()):
 def get_thumbnail_url(doc, pagenumber, small):
 	# If the document has a DocumentCloud ID, then generate the URL to the thumbnail for
 	# its first page.
-	m = re.match("(\d+)-(.+)", doc.get("document-cloud-id", ""))
+	m = re.match(r"https://www.documentcloud.org/documents/(\d+)-([^\.]+)\.html$", doc.get("url", ""))
 	if m:
 		return "https://assets.documentcloud.org/documents/%s/pages/%s-p%d-%s.gif" % (
 			m.group(1), m.group(2), pagenumber, "small" if small else "normal")

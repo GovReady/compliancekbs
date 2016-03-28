@@ -4,7 +4,12 @@ Compliance Knowledge Base Service for Security Controls Compliance Server
 API server
 ----------
 
+The API server requires python3. Install dependencies:
+
     pip3 install -r requirements.txt
+
+Then start using:
+
     python3 server.py
 
 YAML schema
@@ -18,9 +23,11 @@ Each YAML file describes a document. Documents have the following fields:
 
 `title`: The display title of the document.
 
-`document-cloud-id`: If the document is uploaded to Document Cloud, then the id of the document on Document Cloud. For the document at https://www.documentcloud.org/documents/2752694-NIST-SP-800-53r4.html, the `document-cloud-id` is just `2752694-NIST-SP-800-53r4`.
+`url`: The preferred URL where the document can be viewed. This is a link for humans. We recognize URLs that look like `https://www.documentcloud.org/documents/###-____.html` for displaying thumbnails from DocumentCloud.
 
-`url`: If the document is not in Document Cloud, a URL where the document can be viewed.
+`authoritative-url`: A link to the authoritative copy of a document, i.e. as published by the document owner. The URL should return a direct download link for a file in the format given in the `format` document property.
+
+`doi`: The "DOI" if the document has been assigned one (e.g. `doi:10.6028/NIST.SP.800-37r1`).
 
 `format`: If the document is not in Document Cloud, the document's format. Can be `markdown`.
 
