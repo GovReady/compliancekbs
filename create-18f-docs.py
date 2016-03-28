@@ -24,6 +24,7 @@ for controlid in ("AC", "AT", "AU", "CA", "CM", "CP", "IA", "IR", "PL", "PS", "R
 	doc["title"] = re.match("#\s+(.*)", md).group(1)
 	doc["owner"] = "18F"
 	doc["url"] = "https://github.com/18F/compliance-docs/blob/master/%s-Policy.md" % controlid
+	doc["authoritative-url"] = "https://raw.githubusercontent.com/18F/compliance-docs/master/%s-Policy.md" % controlid
 	doc["format"] = "markdown"
 
 	with open(fn, "w") as f:

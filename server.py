@@ -1,4 +1,5 @@
 import sys, os, os.path, glob, re, cgi, datetime, json
+import urllib.request
 import sqlite3
 
 import rtyaml
@@ -116,11 +117,21 @@ def field_matches_query(query, value):
 	r = "".join( [(re.escape(c) if re.match(r"[a-zA-Z0-9]", c) else ".?" ) for c in query] )
 	for m in re.finditer("(?:^|\W)" + r, value, re.I):
 		start, end = m.span()
-		yield cgi.escape(value[max(start-50, 0):start]) + "<b>" + cgi.escape(value[start:end]) + "</b>" + cgi.escape(value[end:end+50])
+		yield cgi.escape(value[max(start-50, 0):start]) + "<b>" + cgi.escape(value[start:end]) + "</b>" + cgi.escape(value[end:end+175])
 
 def term_matches_query_recursively(query, document, term, relation_to=None, seen=set()):
 	# Does it match the term specified here?
 	for ctx in field_matches_query(query, term['term']):
+		# It matched, and we have context within the string of the term itself. But if
+		# the term says what page it is on, and if we can get the text of that page,
+		# then replace the context with context from that page around *that term*
+		# (i.e. look for the term in the page, not the original query in the page).
+		page_text = get_page_text(document, term.get('page'))
+		if page_text:
+			for ctx1 in field_matches_query(term["term"], page_text):
+				ctx = ctx1
+				break
+
 		yield [(ctx, document, relation_to)]
 		return # only match once per term
 
@@ -182,25 +193,61 @@ def format_query_context_path(path):
 		ret += "</span>"
 	return ret
 
+def get_documentcloud_document_id(doc):
+	m = re.match(r"https://www.documentcloud.org/documents/(\d+)-([^\.]+)\.html$", doc.get("url", ""))
+	if m:
+		return m.group(1), m.group(2)
+	return None
+
+def query_documentcloud_api(documentcloud_id):
+	# query DocumentCloud API
+	return json.loads(urllib.request.urlopen("https://www.documentcloud.org/api/documents/%s-%s.json" % documentcloud_id).read().decode("utf8"))
 
 def get_thumbnail_url(doc, pagenumber, small):
 	# If the document has a DocumentCloud ID, then generate the URL to the thumbnail for
 	# its first page.
-	m = re.match(r"https://www.documentcloud.org/documents/(\d+)-([^\.]+)\.html$", doc.get("url", ""))
-	if m:
+	documentcloud_id = get_documentcloud_document_id(doc)
+	if documentcloud_id:
+		# We can use the DocumentCloud API to get the URL to a thumbnail, but in the
+		# interests of speed, construct the URL ourselves.
+		#return query_documentcloud_api(documentcloud_id)["document"]["resources"]["page"]["image"].format(
+		#	page=pagenumber,
+		#	size="small" if small else "normal",
+		#)
 		return "https://assets.documentcloud.org/documents/%s/pages/%s-p%d-%s.gif" % (
-			m.group(1), m.group(2), pagenumber, "small" if small else "normal")
+			documentcloud_id[0], documentcloud_id[1], pagenumber, "small" if small else "normal")
 	return None
 
 def get_page_url(doc, pagenumber):
 	# If the document has a DocumentCloud ID, then generate the URL to the thumbnail for
 	# its first page.
-	m = re.match("(\d+)-(.+)", doc.get("document-cloud-id", ""))
-	if m:
+	documentcloud_id = get_documentcloud_document_id(doc)
+	if documentcloud_id:
 		return "https://assets.documentcloud.org/documents/%s/%s.pdf#page=%d" % (
-			m.group(1), m.group(2), pagenumber)
+			documentcloud_id[0], documentcloud_id[1], pagenumber)
 	return None
 
+def get_page_text(doc, pagenumber):
+	# Returns the full text of a page.
+	documentcloud_id = get_documentcloud_document_id(doc)
+	if documentcloud_id and pagenumber is not None:
+		# Get the text of the page from DocumentCloud.
+
+		# We can use the DocumentCloud API to get the URL to page text, but in the
+		# interests of speed, construct the URL ourselves.
+		#url = query_documentcloud_api(documentcloud_id)["document"]["resources"]["page"]["text"].format(
+		#	page=pagenumber,
+		#)
+		url = "https://www.documentcloud.org/documents/%s/pages/%s-p%d.txt" % (
+			documentcloud_id[0], documentcloud_id[1], pagenumber)
+		return urllib.request.urlopen(url).read().decode("utf8") # TODO: What encoding? Probably use requests library or something that handles that.
+
+	elif doc.get("format") == "markdown" and doc.get("authoritative-url"):
+		# Download the document to get its contents. There is only one page
+		# in a Markdown document.
+		return urllib.request.urlopen(doc.get("authoritative-url")).read().decode("utf8")
+		
+	return None
 
 # main entry point
 

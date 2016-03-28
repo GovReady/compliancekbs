@@ -43,3 +43,4 @@ terms:
   usage: definition
 owner: 18F
 type: policy-document
+authoritative-url: https://raw.githubusercontent.com/18F/compliance-docs/master/AC-Policy.md
