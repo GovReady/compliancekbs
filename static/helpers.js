@@ -86,10 +86,20 @@ function ajax_with_indicator(options) {
   };
   options.error = function(jqxhr) {
     hide_loading_indicator();
-    if (!old_error) 
+    if (!old_error && jqxhr.status == 500 && /^text\/html/.test(jqxhr.getResponseHeader("content-type")) && /^(<!DOCTYPE[\w\W]*>)?\s*<html/.test(jqxhr.responseText)) {
+      // We might get back HTML in a 500 error. Flask does this. Show the
+      // HTML, in an iframe.
+      show_modal_error("Error", '<iframe style="width: 100%; height: 60vh;"></iframe>')
+      var ifrm = $('#global_modal').find('iframe')[0];
+      ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
+      ifrm.document.open();
+      ifrm.document.write(jqxhr.responseText);
+      ifrm.document.close();
+    } else if (!old_error) {
       show_modal_error("Error", "Something went wrong, sorry.")
-    else
+    } else {
       old_error(jqxhr.responseText, jqxhr);
+    }
   };
   ajax_num_executing_requests++;
   $.ajax(options);
