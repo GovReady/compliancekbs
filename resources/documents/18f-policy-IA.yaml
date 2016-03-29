@@ -5,3 +5,7 @@ format: markdown
 owner: 18F
 type: policy-document
 authoritative-url: https://raw.githubusercontent.com/18F/compliance-docs/master/IA-Policy.md
+terms:
+- term: 18F
+- term: policy
+- term: Identification and Authentication Policy

@@ -1,7 +1,11 @@
 id: 18f-policy-PL
-title: 18F security Planning Policy
+title: 18F Security Planning Policy
 url: https://github.com/18F/compliance-docs/blob/master/PL-Policy.md
 format: markdown
 owner: 18F
 type: policy-document
 authoritative-url: https://raw.githubusercontent.com/18F/compliance-docs/master/PL-Policy.md
+terms:
+- term: 18F
+- term: policy
+- term: Security Planning Policy

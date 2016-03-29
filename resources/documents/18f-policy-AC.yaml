@@ -6,6 +6,7 @@ security-controls:
 - AC
 terms:
 - term: 18F
+- term: policy
 - term: Access control Policy
 - term: computing resources
 - term: unauthorized access

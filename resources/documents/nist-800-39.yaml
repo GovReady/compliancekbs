@@ -1,4 +1,4 @@
-type: policy-document
+type: authoritative-document
 id: nist-800-39
 title: NIST Special Publication 800-39
 owner: NIST
@@ -8,4 +8,3 @@ authoritative-url: http://csrc.nist.gov/publications/nistpubs/800-39/SP800-39-fi
 terms:
 - term: Information System Security Officer
   page: 77
-
