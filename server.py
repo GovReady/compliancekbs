@@ -248,7 +248,7 @@ def get_page_url(doc, pagenumber):
 	# its first page.
 	documentcloud_id = get_documentcloud_document_id(doc)
 	if documentcloud_id:
-		return "https://assets.documentcloud.org/documents/%s/%s.pdf#page=%d" % (
+		return "https://www.documentcloud.org/documents/%s-%s.html#document/p%d" % (
 			documentcloud_id[0], documentcloud_id[1], pagenumber)
 	return None
 
