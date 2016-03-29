@@ -194,7 +194,7 @@ def format_query_context_path(path):
 			else:
 				ret += ", which "
 			context, document, relation_descr = path.pop(0)
-			ret += cgi.escape(relation_descr) + " “" + context + "”"
+			ret += cgi.escape(relation_descr) + " term “" + context + "”"
 
 			# Only show "in <xxx document>" starting when an element in
 			# the path is not in the same document as the first element's
