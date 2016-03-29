@@ -282,4 +282,4 @@ def get_page_text(doc, pagenumber):
 if __name__ == '__main__':
 	create_db_tables(get_access_log())
 	app.debug = True
-	app.run(port=int(os.environ.get("PORT", "8000")))
+	app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "8000")))
