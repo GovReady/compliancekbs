@@ -1,0 +1,60 @@
+{% extends "template.html" %}
+
+{% block h1 %}
+GovReady Compliance Vocabulary
+{% endblock %}
+
+{% block styles %}
+<style>
+#terms {
+    margin-top: 1.5em;
+    padding: 0;
+}
+#terms li {
+    margin-bottom: 1.5em;
+    list-style: none;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2>Vocabulary Terms</h2>
+    <ul id="terms">
+    </ul>
+</div> <!-- /container -->
+
+<div id="item-template" style="display: none">
+    <li>
+        <a>term</a>
+        <div class="occurrences">
+        </div>
+    </li>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function() {
+    ajax_with_indicator({
+        url: "/api/vocab",
+        method: "GET",
+        success: function(res) {
+            var container = $("#terms");
+            container.text("");
+            res.terms.forEach(function(term) {
+                var n = $("#item-template > li").clone();
+                container.append(n);
+
+                // main link
+                n.find('a').text(term[0].text);
+                n.find('a').attr('href', '/#q=' + encodeURIComponent(term[0].text));
+
+                // documents it occurs in
+                n.find('.occurrences').text(term.map(function(item) { return item.document }).join(", "));
+            });
+        }
+    })
+})
+</script>
+{% endblock %}

@@ -1,4 +1,4 @@
-import sys, os, os.path, glob, re, cgi, datetime, json
+import sys, os, os.path, glob, re, cgi, datetime, json, collections
 import urllib.request, urllib.error
 import sqlite3
 
@@ -33,6 +33,10 @@ def create_db_tables(access_log):
 @app.route('/')
 def show_demo_page():
     return render_template('api-demo.html')
+
+@app.route('/vocabulary')
+def show_vocab_page():
+    return render_template('vocabulary.html')
 
 @app.route('/api/search', methods=['GET'])
 def search_documents():
@@ -287,6 +291,22 @@ def get_page_text(doc, pagenumber):
 		return urllib.request.urlopen(doc.get("authoritative-url")).read().decode("utf8")
 
 	return None
+
+# vocabulary listing
+
+@app.route('/api/vocab', methods=['GET'])
+def vocab():
+	# Get a list of all of the terms in all of the documents.
+	terms = collections.defaultdict(lambda : [])
+	for doc in iter_docs():
+		for term in doc.get("terms", []):
+			terms[term["text"]].append({
+				"text": term["text"],
+				"document": doc["id"],
+			})
+	terms = sorted(terms.values(), key=lambda term : (term[0]["text"].lower(), term[0]["text"]))
+	return jsonify(terms=terms)
+
 
 # main entry point
 
