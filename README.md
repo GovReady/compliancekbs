@@ -19,6 +19,8 @@ Or in production:
 
 	sudo PORT=80 python3 server.py
 
+The process must be killed and restarted if any resource (document) files are added/changed --- i.e. the files are loaded into memory at program start and the process isn't monitoring for changes in the files.
+
 The server logs queries to an sqlite database. To get the log, run:
 
 	sqlite3 -csv access_log.db "select * from query_log" > access_log.csv
@@ -33,7 +35,11 @@ YAML schema
 
 Each YAML file describes a document. Documents have the following fields:
 
-`id`: An identifier for this document unique within the GovReady Knowledge Base.
+`id`: An identifier for this document unique within the GovReady Compliance Knowledge Base. This `id` is used within term references (see below) to refer to this document from other documents. Therefore if an `id` is ever changed, it must also be changed in *all* other documents that refer to this document.
+
+`type`: Either `authoritative-document` for a law, regulation, or other similar document (e.g., NIST documents) or `policy-document` for a policy implementation by an agency (e.g., 18F and CMS documents).
+
+`owner`: Display text for who authored the document (e.g. `NIST`, `CMS`, `18F`). (In the future we'll turn this into an identifier of some sort of resource.)
 
 `title`: The display title of the document.
 
