@@ -233,14 +233,22 @@ def get_thumbnail_url(doc, pagenumber, small):
 			documentcloud_id[0], documentcloud_id[1], pagenumber, "small" if small else "normal")
 
 	# If it's a Markdown document, download it, convert it to HTML, then render it to
-	# an image, and return that image as a data: URL.
-	elif doc.get("format") == "markdown" and os.path.exists("/usr/bin/wkhtmltoimage"):
+	# a PDF, and then to an image, and return that image as a data: URL.
+	elif doc.get("format") == "markdown" and os.path.exists("/usr/bin/htmldoc") and os.path.exists("/usr/bin/pdftoppm"):
 		md = get_page_text(doc, pagenumber)
 		if md:
 			import subprocess, base64
-			return "data:image/jpeg;base64," + base64.b64encode(
-				subprocess.check_output(["/usr/bin/wkhtmltoimage", "--no-images", "--disable-javascript", "--disable-local-file-access", "--width", "300", "--height", "412", "-", "-"],
-					input=CommonMark.commonmark(md).encode("utf8"))).decode("ascii")
+			html = CommonMark.commonmark(md)
+			# TODO: Possible security issue if the Markdown source can generate HTML that
+			# causes htmldoc to perform network requests or possibly unsafe operations.
+			pdf = subprocess.check_output(["/usr/bin/htmldoc", "--quiet", "--continuous",
+				"--size", "4.5x5.8in", # smaller page magnifies the text
+				"--top", "0", "--right", "1cm", "--bottom", "1cm", "--left", "1cm", # margins
+				"-t", "pdf14", "-"],
+				input=html.encode("utf8"))
+			png = subprocess.check_output(["/usr/bin/pdftoppm", "-singlefile", "-r", "60", "-png"],
+				input=pdf)
+			return "data:image/png;base64," + base64.b64encode(png).decode("ascii")
 	return None
 
 def get_page_url(doc, pagenumber):

@@ -6,10 +6,10 @@ API server
 
 The API server requires python3 and some dependencies:
 
-	sudo apt-get install sqlite3 wkhtmltopdf
+	sudo apt-get install sqlite3 htmldoc poppler-utils
     pip3 install -r requirements.txt
 
-(`wkhtmltopdf` is for generating thumbnails of Markdown documents.)
+(`htmldoc` and `poppler-utils` are used for generating thumbnails of Markdown documents (HTML=>PDF and then PDF=>image).)
 
 Then start using:
 
