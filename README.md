@@ -1,7 +1,7 @@
 # compliancekbs
 Compliance Knowledge Base Service for Security Controls Compliance Server
 
-![Screenshot of Compliance Knowledge Base Service](/static/compliancekbs-screenshot.png?raw=true "Screenshot of Compliance Knowledge Base Service")
+![Screenshot of Compliance Knowledge Base Service](/static/compliancekbs-sreenshot.png?raw=true "Screenshot of Compliance Knowledge Base Service")
 
 API server
 ----------
