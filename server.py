@@ -21,7 +21,7 @@ def create_db_tables(access_log):
 	# Create database tables on first run..
 	c = access_log.cursor()
 	for table_name, table_def in [
-		("query_log", "query_time datetime, query text, documents_matched text")
+		("query_log", "query_time datetime, remote_ip text, query text, documents_matched text")
 	]:
 		try:
 			c.execute("CREATE TABLE %s (%s)" % (table_name, table_def))
@@ -57,8 +57,9 @@ def search_documents():
 
 	# log this query
 	cur = get_access_log().cursor()
-	cur.execute("INSERT INTO query_log values (?, ?, ?)", (
+	cur.execute("INSERT INTO query_log values (?, ?, ?, ?)", (
 		datetime.datetime.utcnow(),
+		request.remote_addr,
 		q,
 		" ".join([result["document"]["id"] for result in docs]),
 	))
