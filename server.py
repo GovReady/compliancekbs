@@ -60,7 +60,7 @@ def search_documents():
 	cur.execute("INSERT INTO query_log values (?, ?, ?)", (
 		datetime.datetime.utcnow(),
 		q,
-		json.dumps([result["document"]["id"] for result in docs]),
+		" ".join([result["document"]["id"] for result in docs]),
 	))
 	cur.connection.commit()
 

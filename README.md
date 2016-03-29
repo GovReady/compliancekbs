@@ -6,7 +6,7 @@ API server
 
 The API server requires python3 and some dependencies:
 
-	sudo apt-get install wkhtmltopdf
+	sudo apt-get install sqlite3 wkhtmltopdf
     pip3 install -r requirements.txt
 
 (`wkhtmltopdf` is for generating thumbnails of Markdown documents.)
@@ -18,6 +18,13 @@ Then start using:
 Or in production:
 
 	sudo PORT=80 python3 server.py
+
+The server logs queries to an sqlite database. To get the log, run:
+
+	sqlite3 -csv access_log.db "select * from query_log" > access_log.csv
+
+The columns are the date/time of the query (in UTC), the user's query, and a space-separated list of document IDs that were returned by the query (in the order in which they were returned).
+
 
 YAML schema
 -----------
