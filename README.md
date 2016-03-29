@@ -17,7 +17,7 @@ Then start using:
 
 Or in production:
 
-	nohup sudo PORT=80 python3 server.py
+	sudo ./run
 
 The process must be killed and restarted if any resource (document) files are added/changed --- i.e. the files are loaded into memory at program start and the process isn't monitoring for changes in the files.
 

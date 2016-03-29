@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Runs the Flask server in a production-like environment.
+
+export PORT=80
+
+# The real command.
+CMD="python3 server.py"
+
+# Wrap in nohup so it is immune to the terminal being closed.
+CMD="nohup $CMD > /tmp/server.out 2>&1 < /dev/null"
+
+# Try to run once (stop if unsuccessful), then run in an infinite
+# loop, and detach the whole loop.
+(
+	(eval $CMD || (cat /tmp/server.out; exit 1)) &&
+	while /bin/true; do
+		eval $CMD
+		echo restarting...
+		done) &
