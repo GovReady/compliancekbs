@@ -34,10 +34,12 @@ def create_db_tables(access_log):
 def show_demo_page():
     return render_template('api-demo.html')
 
-@app.route('/api/search', methods=['POST'])
+@app.route('/api/search', methods=['GET'])
 def search_documents():
 	# q is the search query
-	q = request.form['q']
+	q = request.args.get("q")
+	if not q:
+		return jsonify()
 
 	# run the search query over searchable terms in the YAML files
 	# for our documents

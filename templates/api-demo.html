@@ -151,7 +151,7 @@
                 ajax_with_indicator({
                     url: '/api/search',
                     data: qs,
-                    method: 'POST',
+                    method: 'GET',
                     success: function(res) {
                         // Okay we have search results now. Clear old results.
                         $('#results').text('')
