@@ -178,7 +178,7 @@ def term_matches_query_recursively(query, document, term, relation_to=None, seen
 			yield [(cgi.escape(term["term"]), document, relation_to)] + ctx
 
 def format_query_context_path(path):
-	ret = path.pop(0)[0]
+	ret, base_document, dummy = path.pop(0)
 	first = True
 	if len(path) > 0:
 		ret += " <span class=\"from-cited-document\">"
@@ -189,7 +189,17 @@ def format_query_context_path(path):
 			else:
 				ret += ", which "
 			context, document, relation_descr = path.pop(0)
-			ret += cgi.escape(relation_descr) + " “" + context + "” in " + cgi.escape(document.get("short-title", document["id"]))
+			ret += cgi.escape(relation_descr) + " “" + context + "”"
+
+			# Only show "in <xxx document>" starting when an element in
+			# the path is not in the same document as the first element's
+			# document. i.e. So long as the path remains in the first
+			# document, there is no need to be explicit about what document
+			# the term appears in.
+			if document != base_document:
+				ret += " in " + cgi.escape(document.get("short-title", document["id"]))
+				base_document = None # show the document in all future elements
+
 		ret += "</span>"
 	return ret
 
