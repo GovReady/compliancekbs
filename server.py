@@ -1,5 +1,5 @@
 import sys, os, os.path, glob, re, cgi, datetime, json
-import urllib.request
+import urllib.request, urllib.error
 import sqlite3
 
 import rtyaml, CommonMark
@@ -249,7 +249,11 @@ def get_page_text(doc, pagenumber):
 		#)
 		url = "https://www.documentcloud.org/documents/%s/pages/%s-p%d.txt" % (
 			documentcloud_id[0], documentcloud_id[1], pagenumber)
-		return urllib.request.urlopen(url).read().decode("utf8") # TODO: What encoding? Probably use requests library or something that handles that.
+		try:
+			return urllib.request.urlopen(url).read().decode("utf8") # TODO: What encoding? Probably use requests library or something that handles that.
+		except urllib.error.HTTPError as e:
+			# Silently ignore errors.
+			return None
 
 	elif doc.get("format") == "markdown" and doc.get("authoritative-url"):
 		# Download the document to get its contents. There is only one page
