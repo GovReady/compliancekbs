@@ -6,6 +6,10 @@ short-title: NIST SP 800-39
 url: https://www.documentcloud.org/documents/2764682-SP800-39-Final.html
 authoritative-url: http://csrc.nist.gov/publications/nistpubs/800-39/SP800-39-final.pdf
 terms:
-- term: Information System Security Officer
+- text: Information System Security Officer
   page: 77
-
+  same-as:
+    term: ISSO
+- text: ISSO
+  same-as:
+    term: Information System Security Officer

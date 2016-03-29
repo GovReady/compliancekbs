@@ -120,15 +120,20 @@ def field_matches_query(query, value):
 		yield cgi.escape(value[max(start-50, 0):start]) + "<b>" + cgi.escape(value[start:end]) + "</b>" + cgi.escape(value[end:end+175])
 
 def term_matches_query_recursively(query, document, term, relation_to=None, seen=set()):
+	# Prevent infinite recursion as we chain across links between terms.
+	if (document["id"], term["text"]) in seen:
+		return
+	seen = seen | set([(document['id'], term["text"])])
+
 	# Does it match the term specified here?
-	for ctx in field_matches_query(query, term['term']):
+	for ctx in field_matches_query(query, term['text']):
 		# It matched, and we have context within the string of the term itself. But if
 		# the term says what page it is on, and if we can get the text of that page,
 		# then replace the context with context from that page around *that term*
 		# (i.e. look for the term in the page, not the original query in the page).
 		page_text = get_page_text(document, term.get('page'))
 		if page_text:
-			for ctx1 in field_matches_query(term["term"], page_text):
+			for ctx1 in field_matches_query(term["text"], page_text):
 				ctx = ctx1
 				break
 
@@ -170,12 +175,12 @@ def term_matches_query_recursively(query, document, term, relation_to=None, seen
 
 		# Find the term information in the referenced document.
 
-		ref = next(filter(lambda t : t['term'] == refterm, refdoc['terms']))
+		ref = next(filter(lambda t : t['text'] == refterm, refdoc['terms']))
 
 		# See if that term matches this query.
 
-		for ctx in term_matches_query_recursively(query, refdoc, ref, relation_to=relation_descr, seen=seen | set([refdoc['id']])):
-			yield [(cgi.escape(term["term"]), document, relation_to)] + ctx
+		for ctx in term_matches_query_recursively(query, refdoc, ref, relation_to=relation_descr, seen=seen):
+			yield [(cgi.escape(term["text"]), document, relation_to)] + ctx
 
 def format_query_context_path(path):
 	ret, base_document, dummy = path.pop(0)

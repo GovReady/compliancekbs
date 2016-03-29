@@ -5,41 +5,41 @@ format: markdown
 security-controls:
 - AC
 terms:
-- term: 18F
-- term: Access control Policy
-- term: computing resources
-- term: unauthorized access
-- term: informational assets
-- term: access control practices
-- term: 18F Production environment
-- term: General Availability
-- term: Federal Information Processing Standards (FIPS)
-- term: National Institute of Standards and Technology (NIST) Special Publications
-- term: International Organization for Standards (ISO)
-- term: logical access
-- term: separates duties
+- text: 18F
+- text: Access control Policy
+- text: computing resources
+- text: unauthorized access
+- text: informational assets
+- text: access control practices
+- text: 18F Production environment
+- text: General Availability
+- text: Federal Information Processing Standards (FIPS)
+- text: National Institute of Standards and Technology (NIST) Special Publications
+- text: International Organization for Standards (ISO)
+- text: logical access
+- text: separates duties
   defined-by:
     document: nist-800-53
     term: Separation of Duties
-- term: separation of duties
+- text: separation of duties
   defined-by:
     document: nist-800-53
     term: Separation of Duties
-- term: least privilege
+- text: least privilege
   defined-by:
     document: nist-800-53
     term: Least Privilege
-- term: store
-- term: Security Operations
+- text: store
+- text: Security Operations
   usage: definition
   defined-by:
     document: nist-800-39
     term: Information System Security Officer
-- term: Development Operations
+- text: Development Operations
   usage: definition
-- term: Senior Director
+- text: Senior Director
   usage: definition
-- term: Director of Compliance
+- text: Director of Compliance
   usage: definition
 owner: 18F
 type: policy-document

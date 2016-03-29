@@ -59,7 +59,7 @@ Each YAML file describes a document. Documents have the following fields:
 
 A term is a phrase that appears in a document. It has the following attributes:
 
-`term`: The text as it appears in the document.
+`text`: The text *exactly* as it appears in the document. If the term appears slightly differently at different locations in the document, a separate term entry must be used. This text is also used as an identifier to refer to this term in term references (see below) both in the same document and in other documents. Therefore if the term `text` is ever changed, it must also be changed in *all* other places it occurs in a term reference in this and any other documents that refer to this term.
 
 `page`: The primary page on which it appears in the document (e.g. where it is defined, if applicable).
 
@@ -75,4 +75,4 @@ A term-reference is a way of locating a term within a document. A term-reference
 
 `document`: The identifier (`id`) of the document where the referenced term occurs. If this attribute is missing, then a term is being referenced in the same document that the YAML file is describing --- i.e. to `same-as` two terms that appear in the same document.
 
-`term`: The text of the term as it appears in that document. If omitted in a parent `term`, the term appears with the same words in the referenced document.
+`term`: The `text` of the term as it appears in that document. If omitted in a parent term, the term appears with the same words in the referenced document.

@@ -1,0 +1,77 @@
+id: cms-rmh-2-7.2-incident-handling
+type: policy-document
+owner: CMS
+title: CMS Risk Management Handbook Volume II Procedure 7.2 Incident Handling
+short-title: CMS RMH II 7.2
+url: https://www.documentcloud.org/documents/2778553-RMH-VII-7-2-Incident-Handling-Procedure.html
+authoritative-url: https://www.cms.gov/Research-Statistics-Data-and-Systems/CMS-Information-Technology/InformationSecurity/Downloads/RMH_VII_7-2_Incident_Handling_Procedure.pdf
+terms:
+  - text: Incident Response
+    page: 10
+    same-as:
+      term: IR
+
+  - text: CMS Computer Security Incident Response Team
+    page: 9
+    same-as:
+      term: CSIRT
+  - text: CSIRT
+    same-as:
+      term: CMS Computer Security Incident Response Team
+
+  - text: CMS Information System Security Officer
+    page: 9
+    same-as:
+      term: CMS ISSO
+    defined-by:
+      document: nist-800-39
+      term: Information System Security Officer
+  - text: CMS ISSO
+    same-as:
+      term: CMS Information System Security Officer
+
+  - text: CMS Security Operations Center
+    page: 9
+    same-as:
+      term: CMS SOC
+  - text: CMS SOC
+    same-as:
+      term: CMS Security Operations Center
+
+  - text: Business Partner System Security Officer (SSO)
+    page: 10
+
+  - text: Business Partner System Security Officer (SSO)
+    page: 10
+
+  - text: On-site Incident Response (IR) Authority
+  - text: Point-Of-Contact (POC) at the reporting site
+    page: 11
+
+  - text: Personally Identifiable Information
+    page: 12
+  - text: Law Enforcement
+    page: 12
+
+  - text: Incident Report
+    page: 16
+
+  - text: CMS Business Owner(s)
+    page: 16
+
+  - text: HHS Computer Security Incident Response Center
+    page: 16
+    same-as:
+      term: HHS CSIRC
+  - text: HHS CSIRC
+    page: 16
+  - text: United States Computer Emergency Readiness Team (US-CERT)
+    page: 16
+
+  - text: CMS Physical Security Office
+    page: 17
+
+  - text: Website Defacement
+    page: 61
+  - text: Blackmail
+    page: 65
