@@ -1,0 +1,69 @@
+# Refs:
+#   https://www.owasp.org/index.php/Industry:Project_Review/NIST_SP_800-37r1_FPD_Appendix_E
+#   https://docs.google.com/a/civicactions.net/spreadsheets/d/1jVywUmmJhr9_vbLYIdYg3ccTSVfc_3xajb2DH_dgW8A/edit?usp=sharing
+
+rmf_tasks:
+  - step:
+      number:       1
+      name:         Categorize Information System
+      - task:
+          number:       1
+          name:         Security Categorization
+          description: >
+            Categorize the information system and document the results
+            of the security categorization in the security plan.
+      - task:
+          number:       2
+          name:         Information System Description
+          description: >
+            Describe the information system (including systemboundary)
+            and document the description in the security plan.
+      - task:
+          number:       3
+          name:         Information System Registration
+          description: >
+            Register the information system with appropriate
+            organizational program/management offices.
+  - step:
+      number:       2
+      name:         Select Security Controls
+      - task:
+          number:       1
+          name:         Security Control Selection
+          description: >
+            Select the security controls for the information
+            system and document the controls in the security plan.
+      - task:
+          number:       2
+          name:         Common Control Identification
+          description: >
+            Identify the security controls that are provided by the
+            organization as common controls for organizational
+            information systems and document the controls in a
+            security plan (or equivalent document).
+      - task:
+          number:       3
+          name:         Monitoring Strategy
+          description: >
+            Develop a strategy for the continuous monitoring of
+            security control effectiveness and any proposed/actual
+            changes to the information system and its environment
+            of operation.
+      - task:
+          number:       4
+          name:         Security Plan Approval
+          description: >
+            Review and approve the security plan.
+  - step:
+      number:       3
+      name:         Implement Security Controls
+  - step:
+      number:       4
+      name:         Assess Security Controls
+  - step:
+      number:       5
+      name:         Authorize Information System
+  - step:
+      number:       6
+      name:         Monitor Security Controls
+            
