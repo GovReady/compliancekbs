@@ -1,4 +1,5 @@
 id: role-isse
+type: role
 source: RMF
 name:
   full:             Information System Security Engineer

@@ -1,4 +1,5 @@
 id: role-ccp
+type: role
 source: RMF
 name:
   full:             Common Control Provider

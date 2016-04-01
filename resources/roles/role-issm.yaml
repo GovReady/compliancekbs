@@ -1,4 +1,5 @@
 id: role-issm
+type: role
 name:
   full:             Information System Security Manager
   short:            ISSM

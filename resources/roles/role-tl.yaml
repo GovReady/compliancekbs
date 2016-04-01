@@ -1,4 +1,5 @@
 id: role-tl
+type: role
 name:
   full:               Tech Lead
   short:              TL

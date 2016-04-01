@@ -1,4 +1,5 @@
 id:     task-1-1
+type: task
 source: RMF
 number: 1.1
 name:   Security Categorization

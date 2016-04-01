@@ -1,4 +1,5 @@
 id: role-sca
+type: role
 source: RMF
 name:
   full:             Security Control Assessor

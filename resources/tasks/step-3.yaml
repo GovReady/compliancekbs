@@ -1,4 +1,5 @@
 id:     step-3
+type: task
 source: RMF
 number: 3
 name:   Implement Security Controls

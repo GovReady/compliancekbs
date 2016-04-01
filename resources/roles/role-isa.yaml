@@ -1,4 +1,5 @@
 id: role-isa
+type: role
 source: RMF
 name:
   full:             Information Security Architect

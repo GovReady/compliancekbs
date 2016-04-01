@@ -1,4 +1,5 @@
 id: role-ao
+type: role
 source: RMF
 inherently-governmental: yes
 name:
