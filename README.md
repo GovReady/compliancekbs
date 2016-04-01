@@ -33,7 +33,7 @@ The columns are the date/time of the query (in UTC), the user's IP address, the 
 YAML schema
 -----------
 
-### documnet
+### document
 
 Each YAML file describes a document. Documents have the following fields:
 
@@ -79,6 +79,18 @@ A term-reference is a way of locating a term within a document. A term-reference
 
 `term`: The `text` of the term as it appears in that document. If omitted in a parent term, the term appears with the same words in the referenced document.
 
-### Style Guide
+Running locally with Docker
+---------------------------
+
+To run the Compliance Knowledge Base locally in docker, use the `./startup.sh` script. Note that it will download a large amount of files the first time (working to create an image to speed this up). Once completed, you should be able to visit http://localhost:8000 to see the site.
+
+If you make changes locally that you want to see reflected in the web interface, simply remove the running Docker container and re-run `startup.sh`:
+```
+docker rm -f compliancekbs
+./startup.sh
+```
+
+Coding Style Guide
+------------------
 
 The official [Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/#indentation) states that spaces, with 4 spaces per level, are the preferred indentation method. Python3 will generate an error if mixed use of tabs and spaces. The Python files here all follow the Python Style Guide and use 4 spaces for indentation.
