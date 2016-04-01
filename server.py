@@ -38,6 +38,10 @@ def show_demo_page():
 def show_vocab_page():
     return render_template('vocabulary.html')
 
+@app.route('/roles')
+def show_roles_page():
+    return render_template('roles.html')
+
 @app.route('/api/search', methods=['GET'])
 def search_documents():
     # q is the search query
@@ -80,6 +84,12 @@ def iter_docs():
     # iterate through all of the resources that represent documents
     for res in all_resources.values():
         if res["type"] in ("authoritative-document", "policy-document"):
+            yield res
+
+def iter_roles():
+    # iterate through all of the resources that represent roles
+    for res in all_resources.values():
+        if res["type"] in ("role"):
             yield res
 
 # search
@@ -307,6 +317,25 @@ def vocab():
     terms = sorted(terms.values(), key=lambda term : (term[0]["text"].lower(), term[0]["text"]))
     return jsonify(terms=terms)
 
+# roles listing
+
+@app.route('/api/roles', methods=['GET'])
+def roles():
+    # Get a list of all of the role names and description.
+    roles = collections.defaultdict(lambda : [])
+    for role in iter_roles():
+        roles[role["id"]].append({
+            "id":          role["id"],
+            "description": role["description"],
+            "full_name":   role["name"]["full"],
+            "short_name":  role["name"].get("short",""),
+            "aliases":     role["name"].get("aliases",[]),
+            "source":           role.get("source",""),
+            "governmental":     role.get("inherently-governmental",""),
+            "responsibilities": role.get("responsibilities",[]),
+        })
+    roles = sorted(roles.values(), key=lambda role : (role[0]["full_name"].lower(), role[0]["full_name"]))
+    return jsonify(roles=roles)
 
 # main entry point
 
