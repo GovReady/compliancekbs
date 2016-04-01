@@ -1,0 +1,21 @@
+id: role-ceo
+source: RMF
+name:
+  full:             Chief Executive Officer
+  short:            CEO
+  aliases:
+    - Head of Agency
+    - President
+responsibilities:
+  primary:
+  secondary:
+description: >-
+  The head of agency (or chief executive officer) is the highest-level senior
+  official or executive within an organization with the overall responsibility
+  to provide information security protections commensurate with the risk and
+  magnitude of harm (i.e., impact) to organizational operations and assets,
+  individuals, other organizations, and the Nation resulting from unauthorized
+  access, use, disclosure, disruption, modification, or destruction of: (i)
+  information collected or maintained by or on behalf of the agency; and (ii)
+  information systems used or operated by an agency or by a contractor of an
+  agency or other organization on behalf of an agency.

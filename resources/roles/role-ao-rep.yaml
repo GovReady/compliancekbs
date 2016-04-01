@@ -1,0 +1,29 @@
+id: role-ao-rep
+source: RMF
+name:
+  full:             Authorizing Official Designated Representative
+responsibilities:
+  primary:
+  primary_or:
+    - 2.4
+    - 5.4
+  secondary:
+  secondary_or:
+    - 1.1
+    - 1.2
+    - 2.1
+    - 2.2
+    - 2.3
+    - 4.1
+    - 5.1
+    - 5.5
+    - 6.2
+    - 6.3
+    - 6.4
+    - 6.6
+    - 6.7
+description: >-
+  The authorizing official designated representative is an organizational
+  official that acts on behalf of an authorizing official to coordinate
+  and conduct the required day-to-day activities associated with the
+  security authorization process.

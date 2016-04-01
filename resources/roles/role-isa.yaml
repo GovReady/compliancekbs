@@ -1,0 +1,20 @@
+id: role-isa
+source: RMF
+name:
+  full:             Information Security Architect
+  aliases:
+    - Chief Information Security Officer
+    - CISO
+    - Director of Security
+responsibilities:
+  primary:
+    - 2.1
+    - 2.2
+  secondary:
+description: >-
+  The information security architect is an individual, group, or organization
+  responsible for ensuring that the information security requirements necessary
+  to protect the organization's core missions and business processes are
+  adequately addressed in all aspects of enterprise architecture including
+  reference models, segment and solution architectures, and the resulting
+  information systems supporting those missions and business processes.

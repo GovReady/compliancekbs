@@ -1,0 +1,20 @@
+id: role-sca
+source: RMF
+name:
+  full:             Security Control Assessor
+responsibilities:
+  primary:
+    - 4.1
+    - 4.2
+    - 4.3
+    - 6.2
+  secondary:
+    - 5.1
+    - 5.3
+    - 6.3
+description: >-
+  The security control assessor<ref>Security control assessors may be called
+  certification agents in some organizations. At the discretion of the
+  organization, security control assessors may be given additional
+  duties/responsibilities for the post processing and analysis of security
+  control assessment findings and results.

@@ -1,0 +1,30 @@
+id: role-ao
+source: RMF
+inherently-governmental: yes
+name:
+  full:             Authorizing Official
+  short:            AO
+responsibilities:
+  primary:
+    - 5.5
+  primary_or:
+    - 2.4
+    - 5.4
+    - 6.6
+  secondary:
+  secondary_or:
+    - 1.1
+    - 1.2
+    - 2.1
+    - 2.2
+    - 2.3
+    - 4.1
+    - 5.1
+    - 6.2
+    - 6.3
+    - 6.4
+description: >-
+  The authorizing official is a senior official or executive with the authority
+  to formally assume responsibility for operating an information system at an
+  acceptable level of risk to organizational operations and assets, individuals,
+  other organizations, and the Nation.

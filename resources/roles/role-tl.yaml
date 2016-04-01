@@ -1,0 +1,6 @@
+id: role-tl
+name:
+  full:               Tech Lead
+  short:              TL
+description: >-
+  An engineer that leads the technical development of the project.

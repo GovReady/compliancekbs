@@ -1,0 +1,33 @@
+id: role-isso
+source: RMF
+name:
+  full:             Information System Security Officer
+  short:            ISSO
+responsibilities:
+  primary:
+  secondary:
+    - 1.2
+    - 1.3
+    - 2.1
+    - 2.3
+    - 3.1
+    - 3.2
+    - 4.1
+    - 4.2
+    - 4.3
+    - 5.1
+    - 5.2
+    - 5.3
+    - 6.1
+    - 6.2
+    - 6.3
+    - 6.4
+    - 6.5
+    - 6.7
+description: >-
+  The information system security officer is an individual responsible for
+  ensuring that the appropriate operational security posture is maintained
+  for an information system and as such, works in close collaboration with
+  the information system owner. The information system security officer
+  also serves as a principal advisor on all matters, technical and
+  otherwise, involving the security of an information system.

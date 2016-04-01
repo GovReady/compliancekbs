@@ -1,0 +1,29 @@
+id: role-siso
+source: RMF
+inherently-governmental: yes
+name:
+  full:             Senior Information Security Officer
+  short:            SISO
+responsibilities:
+  primary:
+  primary_or:
+    - 2.2
+  secondary:
+    - 1.1
+    - 1.2
+    - 2.3
+    - 2.4
+    - 4.1
+    - 5.1
+    - 5.4
+    - 5.4
+    - 6.1
+    - 6.6
+    - 6.7
+description: >-
+  The senior information security officer is an organizational official
+  responsible for: (i) carrying out the chief information officer security
+  responsibilities under FISMA; and (ii) serving as the primary liaison for
+  the chief information officer to the organization's authorizing officials,
+  information system owners, common control providers, and information
+  system security officers.

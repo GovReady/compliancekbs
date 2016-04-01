@@ -1,0 +1,7 @@
+id:     task-1-2
+source: RMF
+number: 1.2
+name:   Information System Description
+description: >-
+  Describe the information system (including systemboundary)
+  and document the description in the security plan.

@@ -1,0 +1,28 @@
+id: role-risk
+source: RMF
+inherently-governmental: yes
+name:
+  full:             Risk Executive (Function)
+responsibilities:
+  primary:
+  secondary:
+    - 1.1
+    - 2.2
+    - 2.3
+    - 2.4
+    - 5.4
+    - 5.5
+    - 6.1
+    - 6.6
+    - 6.7
+description: >-
+  The risk executive (function) is an individual or group within an
+  organization that helps to ensure that: (i) risk-related considerations
+  for individual information systems, to include authorization decisions
+  for those systems, are viewed from an organization-wide perspective with
+  regard to the overall strategic goals and objectives of the organization
+  in carrying out its core missions and business functions; and (ii)
+  managing risk from individual information systems is consistent across
+  the organization, reflects organizational risk tolerance, and is
+  considered along with other types of risks in order to ensure
+  mission/business success.
