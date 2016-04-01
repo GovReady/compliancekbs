@@ -11,13 +11,13 @@ RUN apt-get update && \
 #   tar git curl wget dialog net-tools build-essential \
 
 # Copy the application folder inside the container
-COPY . /opt/compliancekbs
+COPY requirements.txt /opt/
 
 # Get pip to download and install requirements:
-RUN pip3 install -r /opt/compliancekbs/requirements.txt
+RUN pip3 install -r /opt/requirements.txt
 
 # Expose ports
-EXPOSE 8000
+EXPOSE 80
 
 WORKDIR /opt/compliancekbs
 

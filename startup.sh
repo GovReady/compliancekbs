@@ -2,7 +2,7 @@
 docker build -t compliancekbs .
 
 # Run the container.
-docker run -d compliancekbs
+docker run -dit -v .:/opt/compliancekbs --name compliancekbs compliancekbs
 
 # Visit: http://localhost:8088
 
