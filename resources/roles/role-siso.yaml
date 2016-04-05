@@ -1,5 +1,6 @@
 id: role-siso
 type: role
+title: Senior Information Security Officer
 source: RMF
 inherently-governmental: yes
 name:
@@ -28,3 +29,10 @@ description: >-
   the chief information officer to the organization's authorizing officials,
   information system owners, common control providers, and information
   system security officers.
+terms:
+- text: Senior Information Security Officer
+  same-as:
+    term: SISO
+- text: SISO
+  same-as:
+    term: Senior Information Security Officer

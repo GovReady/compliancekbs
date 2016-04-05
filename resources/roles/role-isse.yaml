@@ -1,8 +1,7 @@
 id: role-isse
 type: role
+title: Information System Security Engineer
 source: RMF
-name:
-  full:             Information System Security Engineer
 responsibilities:
   primary:
   secondary:
@@ -17,3 +16,10 @@ description: >-
   The information system security engineer is an individual, group, or
   organization responsible for conducting information system security
   engineering activities.
+terms:
+- text: Information System Security Engineer
+  same-as:
+    term: ISSE
+- text: ISSE
+  same-as:
+    term: Information System Security Engineer

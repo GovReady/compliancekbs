@@ -1,5 +1,6 @@
 id: role-risk
 type: role
+title: Risk Executive (Function)
 source: RMF
 inherently-governmental: yes
 name:
@@ -27,3 +28,5 @@ description: >-
   the organization, reflects organizational risk tolerance, and is
   considered along with other types of risks in order to ensure
   mission/business success.
+terms:
+- text: Risk Executive

@@ -1,8 +1,7 @@
 id: role-ccp
 type: role
+title: Common Control Provider
 source: RMF
-name:
-  full:             Common Control Provider
 responsibilities:
   primary:
     - 2.2
@@ -28,3 +27,10 @@ description: >-
   responsible for the development, implementation, assessment, and
   monitoring of common controls (i.e., security controls inherited by
   information systems).
+terms:
+- text: Common Control Provider
+  same-as:
+    term: CCP
+- text: CCP
+  same-as:
+    term: Common Control Provider

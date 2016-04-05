@@ -1,12 +1,7 @@
 id: role-isa
 type: role
+title: Information Security Architect
 source: RMF
-name:
-  full:             Information Security Architect
-  aliases:
-    - Chief Information Security Officer
-    - CISO
-    - Director of Security
 responsibilities:
   primary:
     - 2.1
@@ -19,3 +14,14 @@ description: >-
   adequately addressed in all aspects of enterprise architecture including
   reference models, segment and solution architectures, and the resulting
   information systems supporting those missions and business processes.
+terms:
+- text: Information Security Architect
+  same-as:
+    term: ISA
+  same-as: 
+    term: Director of Security    
+- text: ISA
+  same-as:
+    term: Information Security Architect
+  same-as: 
+    term: Director of Security

@@ -1,11 +1,7 @@
 id: role-steward
 type: role
+title: Information Owner/Steward
 source: RMF
-name:
-  full:             Information Owner/Steward
-  aliases:
-    - Information Owner
-    - Information Steward
 responsibilities:
   primary:
     - 1.1
@@ -29,3 +25,13 @@ description: >-
   management, or operational authority for specified information and the
   responsibility for establishing the policies and procedures governing its
   generation, collection, processing, dissemination, and disposal
+terms:
+- text: Information Owner
+  same-as:
+    term: IO
+- text: IO
+  same-as:
+    term: Information Owner/Steward
+- text: Information Steward
+  same-as:
+    term: Information Owner

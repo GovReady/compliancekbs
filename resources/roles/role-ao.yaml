@@ -1,10 +1,8 @@
 id: role-ao
 type: role
+title: Authorizing Official
 source: RMF
 inherently-governmental: yes
-name:
-  full:             Authorizing Official
-  short:            AO
 responsibilities:
   primary:
     - 5.5
@@ -29,3 +27,10 @@ description: >-
   to formally assume responsibility for operating an information system at an
   acceptable level of risk to organizational operations and assets, individuals,
   other organizations, and the Nation.
+terms:
+- text: Authorizing Official
+  same-as:
+    term: AO
+- text: AO
+  same-as:
+    term: Authorizing Official

@@ -327,14 +327,12 @@ def roles():
         roles[role["id"]].append({
             "id":          role["id"],
             "description": role["description"],
-            "full_name":   role["name"]["full"],
-            "short_name":  role["name"].get("short",""),
-            "aliases":     role["name"].get("aliases",[]),
+            "title":   role["title"],
             "source":           role.get("source",""),
             "governmental":     role.get("inherently-governmental",""),
             "responsibilities": role.get("responsibilities",[]),
         })
-    roles = sorted(roles.values(), key=lambda role : (role[0]["full_name"].lower(), role[0]["full_name"]))
+    roles = sorted(roles.values(), key=lambda role : (role[0]["title"].lower(), role[0]["title"]))
     return jsonify(roles=roles)
 
 # main entry point

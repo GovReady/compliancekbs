@@ -1,7 +1,9 @@
 id: role-tl
 type: role
-name:
-  full:               Tech Lead
-  short:              TL
+title: Tech Lead
 description: >-
   An engineer that leads the technical development of the project.
+terms:
+- text: Tech Lead
+  same-as:
+    term: TL

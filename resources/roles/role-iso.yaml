@@ -1,8 +1,7 @@
 id: role-iso
 type: role
+title: Information System Owner
 source: RMF
-name:
-  full:             Information System Owner
 responsibilities:
   primary:
     - 1.1
@@ -32,3 +31,10 @@ description: >-
   The information system owner is an organizational official responsible for
   the procurement, development, integration, modification, operation,
   maintenance, and disposal of an information system.
+terms:
+- text: Information System Owner
+  same-as:
+    term: ISO
+- text: ISO
+  same-as:
+    term: Information System Owner

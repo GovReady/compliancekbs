@@ -1,8 +1,6 @@
 id: role-issm
 type: role
-name:
-  full:             Information System Security Manager
-  short:            ISSM
+title: Information System Security Manager
 responsibilities:
   primary:
   secondary:
@@ -15,3 +13,10 @@ description: >-
   role that has oversight responsibilities for an information security program.
   In these situations, information system security officers may report directly
   to the information system security managers.
+terms:
+- text: Information System Security Manager
+  same-as:
+    term: ISSM
+- text: ISSM
+  same-as:
+    term: Information System Security Manager

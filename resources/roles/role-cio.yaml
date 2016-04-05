@@ -1,9 +1,7 @@
 id: role-cio
 type: role
+title: Chief Information Officer
 source: RMF
-name:
-  full:             Chief Information Officer
-  short:            CIO
 inherently-governmental: yes
 responsibilities:
   primary:
@@ -25,3 +23,10 @@ description: >-
   information collected or maintained by or on behalf of the agency; and (ii)
   information systems used or operated by an agency or by a contractor of an
   agency or other organization on behalf of an agency.
+terms:
+- text: Chief Informatioin Officer
+  same-as:
+    term: CIO
+- text: CIO
+  same-as:
+    term: Chief Informatioin Officer

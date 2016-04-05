@@ -1,8 +1,7 @@
 id: role-ao-rep
 type: role
+title: Authorizing Official Designated Representative
 source: RMF
-name:
-  full:             Authorizing Official Designated Representative
 responsibilities:
   primary:
   primary_or:

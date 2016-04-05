@@ -1,5 +1,6 @@
 id: role-ceo
 type: role
+title: Chief Executive Officer
 source: RMF
 name:
   full:             Chief Executive Officer
@@ -20,3 +21,10 @@ description: >-
   information collected or maintained by or on behalf of the agency; and (ii)
   information systems used or operated by an agency or by a contractor of an
   agency or other organization on behalf of an agency.
+terms:
+- text: Chief Executive Officer
+  same-as:
+    term: CEO
+- text: CEO
+  same-as:
+    term: Chief Executive Officer
