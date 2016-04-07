@@ -41,6 +41,18 @@ GovReady Compliance Knowledge Base Prototype API Demo
                     #results .result-item .context .from-cited-document:after {
                         content: "]";
                     }
+
+            #results .result-item .role-thumbnail {
+                border: 1px solid #999;
+                width: 100%;
+                padding: 1em;
+            }
+                #results .result-item .role-thumbnail > div {
+                    text-align: center;
+                    font-size: 90%;
+                    font-weight: bold;
+                    color: #666;
+                }
 </style>
 {% endblock %}
 
@@ -61,7 +73,7 @@ GovReady Compliance Knowledge Base Prototype API Demo
         <div id="result-template" style="display: none">
             <!-- Template for each search result, filled in using jQuery -->
             <div class="result-item row">
-                <div class="col-sm-2">
+                <div class="col-sm-2 thumbnail-container" style="margin-bottom: 1em">
                     <a href=""><img class="img-responsive"/></a>
                 </div>
                 <div class="col-sm-10">
@@ -110,12 +122,25 @@ GovReady Compliance Knowledge Base Prototype API Demo
                 $('#results').append(node);
 
                 // title & link url & owner
-                node.find('h3 a').text(result.document.title);
-                node.find('a').attr('href', result.link);
-                node.find('.owner span').text(result.document.owner);
+                if (result.link) {
+                    node.find('h3 a').text(result.resource.title);
+                    node.find('a').attr('href', result.link);
+                } else {
+                    node.find('h3').text(result.resource.title);
+                }
+                
+                // owner (if a document; roles don't have owners)
+                node.find('.owner').toggle(result.resource.owner != null);
+                node.find('.owner span').text(result.resource.owner);
 
                 // thumbnail
-                node.find('img').attr('src', result.thumbnail || "/static/no-thumbnail.png");
+                if (result.resource.type == "policy-document" || result.resource.type == "authoritative-document")
+                    // for documents, display the given thumbnail image (provided as a URL), or if there is no thumbnail URL then use our stock "no thumbnail" image
+                    node.find('img').attr('src', result.thumbnail || "/static/no-thumbnail.png");
+
+                else if (result.resource.type == "role")
+                    // roles don't have previewable content --- insert some HTML to display something in the thumbnail column
+                    node.find('.thumbnail-container').html("<div class='role-thumbnail'><div>ROLE</div></div>")
 
                 // context
                 result.context.forEach(function(item) {

@@ -52,14 +52,14 @@ def search_documents():
     # run the search query over searchable terms in the YAML files
     # for our documents
     docs = []
-    for doc in iter_docs():
+    for doc in iter_searchable_resources():
         # see if this document matches the query
         context = doc_matches_query(q, doc)
         if context:
             # ...and if so, return it, the match context, and a thumbnail
             # url back to the client
             docs.append({
-                "document": doc,
+                "resource": doc,
                 "context": context,
                 "link": doc.get("url") or get_page_url(doc, 1), # if url not specified on document, get from DocumentCloud id
                 "thumbnail": get_thumbnail_url(doc, 1, True),
@@ -71,7 +71,7 @@ def search_documents():
         datetime.datetime.utcnow(),
         request.remote_addr,
         q,
-        " ".join([result["document"]["id"] for result in docs]),
+        " ".join([result["resource"]["id"] for result in docs]),
     ))
     cur.connection.commit()
 
@@ -80,10 +80,10 @@ def search_documents():
         results=docs
     )
 
-def iter_docs():
-    # iterate through all of the resources that represent documents
+def iter_searchable_resources():
+    # iterate through all of the resources that can be searched
     for res in all_resources.values():
-        if res["type"] in ("authoritative-document", "policy-document"):
+        if res["type"] in ("authoritative-document", "policy-document", "role"):
             yield res
 
 def iter_roles():
@@ -100,7 +100,7 @@ def doc_matches_query(query, doc):
 
     context = []
 
-    for field in ('title',):
+    for field in ('title', 'description'):
         for ctx in field_matches_query(query, doc.get(field, '')):
             context.append({
                 "where": field,
