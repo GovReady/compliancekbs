@@ -122,9 +122,9 @@ GovReady Compliance Knowledge Base Prototype API Demo
                 $('#results').append(node);
 
                 // title & link url & owner
-                if (result.link) {
+                if (result.resource.url) {
                     node.find('h3 a').text(result.resource.title);
-                    node.find('a').attr('href', result.link);
+                    node.find('a').attr('href', result.resource.url);
                 } else {
                     node.find('h3').text(result.resource.title);
                 }

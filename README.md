@@ -47,7 +47,7 @@ Each YAML file describes a document. Documents have the following fields:
 
 `short-title`: A short form display title of the document.
 
-`url`: The preferred URL where the document can be viewed. This is a link for humans. We recognize URLs that look like `https://www.documentcloud.org/documents/###-____.html` for displaying thumbnails from DocumentCloud.
+`url`: The preferred URL where the document can be viewed. This is a link for humans. We recognize URLs that look like `https://www.documentcloud.org/documents/###-____.html` for displaying thumbnails from DocumentCloud. All documents must have a `url`.
 
 `authoritative-url`: A link to the authoritative copy of a document, i.e. as published by the document owner. The URL should return a direct download link for a file in the format given in the `format` document property. Markdown-formatted documents should have this URL set to the address that fetches the raw Markdown content (i.e. under `https://raw.githubusercontent.com`) so that the application can fetch the document to generate context and thumbnails.
 

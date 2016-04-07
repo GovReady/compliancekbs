@@ -61,7 +61,6 @@ def search_documents():
             docs.append({
                 "resource": doc,
                 "context": context,
-                "link": doc.get("url") or get_page_url(doc, 1), # if url not specified on document, get from DocumentCloud id
                 "thumbnail": get_thumbnail_url(doc, 1, True),
             })
 
