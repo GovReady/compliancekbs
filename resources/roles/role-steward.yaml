@@ -31,7 +31,7 @@ terms:
     term: IO
 - text: IO
   same-as:
-    term: Information Owner/Steward
+    term: Information Steward
 - text: Information Steward
   same-as:
     term: Information Owner

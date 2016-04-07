@@ -10,6 +10,10 @@ terms:
     page: 10
     same-as:
       term: IR
+  - text: IR
+    page: 10
+    same-as:
+      term: Incident Response
 
   - text: CMS Computer Security Incident Response Team
     page: 9

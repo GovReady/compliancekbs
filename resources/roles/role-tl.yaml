@@ -7,3 +7,6 @@ terms:
 - text: Tech Lead
   same-as:
     term: TL
+- text: TL
+  same-as:
+    term: Tech Lead
