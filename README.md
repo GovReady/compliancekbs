@@ -33,9 +33,11 @@ The columns are the date/time of the query (in UTC), the user's IP address, the 
 YAML schema
 -----------
 
+YAML files describe either documents or roles.
+
 ### document
 
-Each YAML file describes a document. Documents have the following fields:
+A YAML file may describe a document. Documents have the following fields:
 
 `id`: An identifier for this document unique within the GovReady Compliance Knowledge Base. This `id` is used within term references (see below) to refer to this document from other documents. Therefore if an `id` is ever changed, it must also be changed in *all* other documents that refer to this document.
 
@@ -56,6 +58,26 @@ Each YAML file describes a document. Documents have the following fields:
 `format`: If the document is not in Document Cloud, the document's format. Can be `markdown`.
 
 `terms`: An array of one or more terms found in the document (see below).
+
+### role
+
+A YAML file may describe a role. Roles have the following fields:
+
+`id`: An identifier for this role unique across all resources within the GovReady Compliance Knowledge Base.
+
+`type`: Always `role`.
+
+`title`: The display title of the role.
+
+`description`: Description text for the role.
+
+`source`: Display text for where this role is defined. (In the future we'll turn this into an identifier of some sort of resource.)
+
+`inherently-governmental`: `yes` or `no` (TODO: Make this a YAML boolean.)
+
+`responsibilities`: A dictionary...
+
+`terms`: An array of one or more terms associated with the role (see below).
 
 ### term
 
