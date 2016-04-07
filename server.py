@@ -492,18 +492,9 @@ def vocab():
 
 @app.route('/api/roles', methods=['GET'])
 def roles():
-    # Get a list of all of the role names and description.
-    roles = collections.defaultdict(lambda : [])
-    for role in iter_roles():
-        roles[role["id"]].append({
-            "id":          role["id"],
-            "description": role["description"],
-            "title":   role["title"],
-            "source":           role.get("source",""),
-            "governmental":     role.get("inherently-governmental",""),
-            "responsibilities": role.get("responsibilities",[]),
-        })
-    roles = sorted(roles.values(), key=lambda role : (role[0]["title"].lower(), role[0]["title"]))
+    # Get a list of all of the roles and just return the YAML data
+    # directly.
+    roles = sorted(iter_roles(), key=lambda role : (role["title"].lower(), role["title"]))
     return jsonify(roles=roles)
 
 # main entry point

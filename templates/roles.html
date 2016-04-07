@@ -6,12 +6,12 @@ GovReady Compliance Roles
 
 {% block styles %}
 <style>
-#terms {
+#roles {
     margin-top: 1.5em;
     padding: 0;
 }
-#terms li {
-    margin-bottom: 1.5em;
+#roles li {
+    margin-bottom: 1em;
     list-style: none;
 }
 </style>
@@ -20,7 +20,7 @@ GovReady Compliance Roles
 {% block body %}
 <div class="container">
     <h2>Roles</h2>
-    <ul id="full_name">
+    <ul id="roles">
     </ul>
 </div> <!-- /container -->
 
@@ -47,8 +47,8 @@ $(function() {
                 container.append(n);
 
                 // main link
-                n.find('a').text(role[0].full_name);
-                n.find('a').attr('href', '/#q=' + encodeURIComponent(role[0].full_name));
+                n.find('a').text(role.title);
+                n.find('a').attr('href', '/#q=' + encodeURIComponent(role.title));
 
                 // documents it occurs in
                 // n.find('.occurrences').text(term.map(function(item) { return item.document }).join(", "));
