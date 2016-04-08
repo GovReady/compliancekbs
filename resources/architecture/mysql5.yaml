@@ -1,0 +1,10 @@
+id: mysql5
+title: MySQL 5.5
+type: package
+function: database
+contributes_to:
+  - control_key: AU-6
+    narrative: 'blah'
+    log_files:
+      - name: syslog
+        path: /var/log/mysql/*

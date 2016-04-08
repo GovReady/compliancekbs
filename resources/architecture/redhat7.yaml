@@ -1,0 +1,12 @@
+id: redhat7
+title: Red Hat EL 7
+type: package
+function: operating-system
+contributes_to:
+  - control_key: AU-6
+    narrative: 'blah'
+    log_files:
+      - name: syslog
+        path: /var/log/syslog
+      - name: audit
+        path: /var/log/audit/*

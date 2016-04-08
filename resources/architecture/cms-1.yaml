@@ -1,0 +1,22 @@
+id: cms-1
+type: architecture
+title: Single Server Content Management System
+defaults:
+  - control_key: AU-6
+    narrative: 'blah'
+    log_files:
+      - package: Red Hat EL 7
+      - package: Apache 2.4
+
+  - control_key: CM-8
+    narrative: 'blah'
+    software_packages:
+      - package: Red Hat EL 7.2
+      - package: Apache 2.4
+      - package: MySQL 5.5
+      - package: PHP 5.5
+      - package: Solr 5.5
+            
+description: >-
+  This is a single server Content Management System (CMS) running the
+  GNU/Linux LAMP stack with either Drupal or Wordpress.
