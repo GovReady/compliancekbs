@@ -177,6 +177,12 @@ def doc_matches_query(query, resource):
 
     context = []
 
+    # Perform exact string comparison on resource IDs.
+    if resource["id"] in query.split(" "):
+        context.append({
+            "html": cgi.escape(resource["id"]),
+        })
+
     # Perform simple text matching on the title and description of the resource.
     for field in ('title', 'description'):
         for ctx in field_matches_query(query, resource.get(field, '')):
