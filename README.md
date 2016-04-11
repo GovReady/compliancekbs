@@ -47,6 +47,8 @@ A YAML file may describe a document. Documents have the following fields:
 
 `title`: The display title of the document.
 
+`alt-titles`: A list of alternate titles of the document.
+
 `short-title`: A short form display title of the document.
 
 `url`: The preferred URL where the document can be viewed. This is a link for humans. We recognize URLs that look like `https://www.documentcloud.org/documents/###-____.html` for displaying thumbnails from DocumentCloud. All documents must have a `url`.

@@ -1,6 +1,8 @@
 type: policy-document
 id: nist-800-39
 title: NIST Special Publication 800-39
+alt-titles:
+  - "Managing Information Security Risk: Organization, Mission, and Information System View"
 owner: NIST
 short-title: NIST SP 800-39
 url: https://www.documentcloud.org/documents/2764682-SP800-39-Final.html

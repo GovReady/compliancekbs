@@ -183,12 +183,18 @@ def doc_matches_query(query, resource):
             "html": cgi.escape(resource["id"]),
         })
 
-    # Perform simple text matching on the title and description of the resource.
-    for field in ('title', 'description'):
-        for ctx in field_matches_query(query, resource.get(field, '')):
+    # Perform simple text matching on the titles and description of the resource.
+
+    def run_simple_test(value):
+        for ctx in field_matches_query(query, value):
             context.append({
                 "html": ctx,
             })
+
+    for field in ('title', 'description'):
+        run_simple_test(resource.get(field, ''))
+    for title in resource.get("alt-titles", []):
+        run_simple_test(title)
 
     # Compare the query to each 'term' that is listed in the resource's terms list.
     # The query may match against the term itself, or any term that it is
