@@ -20,9 +20,11 @@ from flask import Flask, request, render_template, jsonify
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+app.config['DATABASE_FILENAME'] = 'access_log.db'
+app.debug = True
 
-def get_access_log(): 
-    db = sqlite3.connect('access_log.db')
+def get_access_log():
+    db = sqlite3.connect(app.config['DATABASE_FILENAME'])
     db.row_factory = sqlite3.Row
     return db
 
@@ -552,7 +554,7 @@ def query_stats():
     # Return a report of statistics on the queries based on the access log.
 
     # Fetch the recent queries.
-    cursor = get_access_log()
+    cursor = get_access_log().cursor()
     recent_queries = cursor.execute("SELECT * FROM query_log ORDER BY query_time DESC LIMIT 250").fetchall()
 
     def top_by_count(seq, N=20):
@@ -589,8 +591,7 @@ if __name__ == '__main__':
     # Initialization.
     create_db_tables(get_access_log())
 
-    # Create the Flask server, listening on all network interfaces.
+    # Run the Flask server, listening on all network interfaces.
     # Use a default port of 8000 unless the PORT environment variable
     # is given.
-    app.debug = True
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "8000")))
