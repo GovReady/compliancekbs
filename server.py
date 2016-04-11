@@ -6,7 +6,7 @@
 
 ################################################################################
 
-import sys, os, os.path, glob, re, cgi, datetime, json, collections, time
+import sys, os, os.path, glob, re, html, datetime, json, collections, time
 import urllib.request, urllib.error
 import sqlite3
 
@@ -180,7 +180,7 @@ def doc_matches_query(query, resource):
     # Perform exact string comparison on resource IDs.
     if resource["id"] in query.split(" "):
         context.append({
-            "html": cgi.escape(resource["id"]),
+            "html": html.escape(resource["id"]),
         })
 
     # Perform simple text matching on the titles and description of the resource.
@@ -254,7 +254,7 @@ def field_matches_query(query, value):
         matched_text = value[start:end]
         context_after = value[end:end+175]
 
-        yield cgi.escape(context_before) + "<b>" + cgi.escape(matched_text) + "</b>" + cgi.escape(context_after)
+        yield html.escape(context_before) + "<b>" + html.escape(matched_text) + "</b>" + html.escape(context_after)
 
 def term_matches_query_recursively(query, resource, term, relation_to=None, seen=set()):
     # Tests if a term matches a query.
@@ -338,7 +338,7 @@ def term_matches_query_recursively(query, resource, term, relation_to=None, seen
             # the original term and the referenced term to make a path, so that
             # we can reconstruct how the document matched through a chain of
             # term relationships.
-            yield [(cgi.escape(term["text"]), resource, relation_to)] + ctx
+            yield [(html.escape(term["text"]), resource, relation_to)] + ctx
 
 def format_term_match(path):
     # When a term matches, we get a path from a term in a document that is
@@ -386,7 +386,7 @@ def format_term_match(path):
                 relation_descr = "has same meaning as"
 
             # More text.
-            ret += cgi.escape(relation_descr + " term “") + context + cgi.escape("”")
+            ret += html.escape(relation_descr + " term “") + context + html.escape("”")
 
             # Only show "in <xxx document>" starting when an element in
             # the path is not in the same document as the first element's
@@ -394,7 +394,7 @@ def format_term_match(path):
             # document, there is no need to be explicit about what document
             # the term appears in.
             if document != base_document:
-                ret += " in " + cgi.escape(document.get("short-title", document["id"]))
+                ret += " in " + html.escape(document.get("short-title", document["id"]))
                 base_document = None # show the document in all future elements
 
         ret += "</span>"
