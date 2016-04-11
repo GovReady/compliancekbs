@@ -6,7 +6,7 @@
 
 ################################################################################
 
-import sys, os, os.path, glob, re, cgi, datetime, json, collections
+import sys, os, os.path, glob, re, cgi, datetime, json, collections, time
 import urllib.request, urllib.error
 import sqlite3
 
@@ -41,16 +41,35 @@ def create_db_tables(access_log):
     # log table if it's not present already.
     c = access_log.cursor()
     for table_name, table_def in [
-        ("query_log", "query_time datetime, remote_ip text, query text, documents_matched text")
+        ("meta", "key TEXT, value TEXT"),
+        ("query_log", "query_time DATETIME, remote_ip TEXT, query TEXT, documents_matched TEXT, execution_duration INTEGER")
     ]:
         try:
             # Execute CREATE TABLE command.
             c.execute("CREATE TABLE %s (%s)" % (table_name, table_def))
+
+            # Set initial db schema.
+            print("Created db table", table_name)
+            if table_name == "meta":
+                c.execute("INSERT INTO meta VALUES('dbschemaver', ?)", str(1))
         except sqlite3.OperationalError as e:
             # If we get an error that it already exists, that's perfect
             # --- nothing for us to do. Other errors are errors.
             if ("table %s already exists" % table_name) not in str(e):
                 raise e
+    access_log.commit()
+
+    # Schema migrations.
+    while True:
+        schemaver = int((c.execute("SELECT value FROM meta WHERE key = 'dbschemaver'").fetchone() or [0])[0])
+        if schemaver == 1:
+            print("Adding execution_duration column to query_log table.")
+            c.execute("ALTER TABLE query_log ADD execution_duration INTEGER")
+        else:
+            break
+        c.execute("UPDATE meta SET value = ? WHERE key = 'dbschemaver'", str(schemaver+1))
+
+    # Commit db changes.
     access_log.commit()
 
 ################################################################################
@@ -84,6 +103,9 @@ def search_documents():
     if not q:
         return jsonify()
 
+    # Log the duration of the query.
+    query_start_time = time.time()
+
     # Run the search query over searchable resources. Return each
     # resource that matches, plus some contextual information
     # about the match, and other metadata.
@@ -105,12 +127,14 @@ def search_documents():
     # TODO: Put the results in some sort of order.
 
     # Log this query in the database.
+    query_end_time = time.time()
     cur = get_access_log().cursor()
-    cur.execute("INSERT INTO query_log values (?, ?, ?, ?)", (
+    cur.execute("INSERT INTO query_log values (?, ?, ?, ?, ?)", (
         datetime.datetime.utcnow(),
         request.remote_addr,
         q,
         " ".join([result["resource"]["id"] for result in results]),
+        int(round((query_end_time-query_start_time)*1000)), # convert to integral miliseconds
     ))
     cur.connection.commit()
 
