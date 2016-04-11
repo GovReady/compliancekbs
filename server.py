@@ -28,6 +28,31 @@ def get_access_log():
     db.row_factory = sqlite3.Row
     return db
 
+def get_and_cache_remote_resource(resource_id, fn, url, charset):
+    # Load resource data from cached file on disk.
+    cache_fn = os.path.join("cache", resource_id, fn)
+    if os.path.exists(cache_fn):
+        with open(cache_fn) as f:
+            ret = f.read()
+            if ret == "": ret = None # signal failure
+            return ret
+
+    # Get it from a network request.
+    try:
+        print(url)
+        res = urllib.request.urlopen(url).read().decode(charset)
+    except urllib.error.HTTPError as e:
+        # Silently ignore errors.
+        res = ""
+
+    # Write to cache.
+    os.makedirs(os.path.dirname(cache_fn), exist_ok=True)
+    with open(cache_fn, "w") as f:
+        f.write(res)
+
+    # Return.
+    return res
+
 # Pre-load all of the resource files, because there aren't so many of
 # them in this prototype, and map all resource IDs to the data about them,
 # so that we can find them quickly.
@@ -491,11 +516,7 @@ def get_page_text(doc, pagenumber):
         # Download the text at the URL.
         # TODO: What encoding is it coming back as? Probably better to use requests
         # library or something that handles that automatically. Assume UTF-8 now.
-        try:
-            return urllib.request.urlopen(url).read().decode("utf8")
-        except urllib.error.HTTPError as e:
-            # Silently ignore errors.
-            return None
+        return get_and_cache_remote_resource(doc["id"], "page-%d.txt" % pagenumber, url, "utf8")
 
     # If the document is a Markdown document, fetch the text from the authoritative-url.
     # Return the raw Markdown, which is good enough to be the text of the page.
@@ -503,7 +524,7 @@ def get_page_text(doc, pagenumber):
     elif doc.get("format") == "markdown" and doc.get("authoritative-url"):
         # Download the document to get its contents. There is only one page
         # in a Markdown document.
-        return urllib.request.urlopen(doc.get("authoritative-url")).read().decode("utf8")
+        return get_and_cache_remote_resource(doc["id"], "document.md", doc.get("authoritative-url"), "utf8")
 
     # No text is available.
     return None
