@@ -1,0 +1,81 @@
+{% extends "template.html" %}
+
+{% block h1 %}
+GovReady Compliance Knowledge Base Prototype API Query Statistics
+{% endblock %}
+
+{% block styles %}
+<style>
+h3 { margin-top: 2em; }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2>Query Statistics</h2>
+
+    <h3>Most Frequent Queries</h3>
+    <table id="most_freq_queries" class="table">
+    </table>
+
+    <h3>Top Queries With No Matched Resources</h3>
+    <table id="most_freq_queries_no_results" class="table">
+    </table>
+
+    <h3>Most Frequently Matched Documents</h3>
+    <table id="most_freq_docs" class="table">
+    </table>
+</div> <!-- /container -->
+{% endblock %}
+
+{% block scripts %}
+<script>
+function build_table(id, rows, column_keys, column_headers) {
+    var table = $("#" + id);
+    table.text(""); // clear
+
+    // column headers
+    var thead = $("<thead><tr></tr></thead>");
+    table.append(thead);
+    for (var j = 0; j < column_headers.length; j++) {
+        var th = $("<th>").text(column_headers[j]);
+        thead.find("tr").append(th);
+    }
+
+    // body
+    var tbody = $("<tbody/>");
+    table.append(tbody);
+    tbody.text(""); // clear
+    for (var i = 0; i < rows.length; i++) {
+        var tr = $("<tr/>");
+        tbody.append(tr);
+        for (var j = 0; j < column_keys.length; j++) {
+            if (j == 0) {
+                // wrap in a link that goes to the query demo page
+                // for the text
+                var td = $("<td><a></a></td>");
+                tr.append(td);
+                td.find('a').text(rows[i][column_keys[j]]);
+                td.find('a').attr('href', '/#q=' + encodeURIComponent(rows[i][column_keys[j]]));
+            } else {
+                // plain text
+                var td = $("<td></td>").text(rows[i][column_keys[j]]);
+                tr.append(td);
+            }
+        }
+    }
+}
+
+$(function() {
+    ajax_with_indicator({
+        url: "/api/querystats",
+        method: "GET",
+        success: function(res) {
+            build_table("most_freq_queries", res.most_freq_queries, [0, 1], ["Query", "Times"]);
+            build_table("most_freq_queries_no_results", res.most_freq_queries_no_results, [0, 1], ["Query", "Times"]);
+            build_table("most_freq_docs", res.most_freq_docs, [0, 1], ["Document", "Times"]);
+        }
+    })
+})
+</script>
+{% endblock %}

@@ -21,7 +21,10 @@ from flask import Flask, request, render_template, jsonify
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-def get_access_log(): return sqlite3.connect('access_log.db')
+def get_access_log(): 
+    db = sqlite3.connect('access_log.db')
+    db.row_factory = sqlite3.Row
+    return db
 
 # Pre-load all of the resource files, because there aren't so many of
 # them in this prototype, and map all resource IDs to the data about them,
@@ -90,6 +93,13 @@ def show_vocab_page():
 def show_roles_page():
     # The /roles URL shows the roles listing page.
     return render_template('roles.html')
+
+@app.route('/query-stats')
+def show_query_stats_page():
+    # The /roles URL shows the roles listing page.
+    return render_template('query-stats.html')
+
+################################################################################
 
 # Routes - The Search API
 
@@ -520,6 +530,46 @@ def roles():
     # directly.
     roles = sorted(iter_roles(), key=lambda role : (role["title"].lower(), role["title"]))
     return jsonify(roles=roles)
+
+################################################################################
+
+# Query Statistics API
+
+@app.route('/api/querystats', methods=['GET'])
+def query_stats():
+    # Return a report of statistics on the queries based on the access log.
+
+    # Fetch the recent queries.
+    cursor = get_access_log()
+    recent_queries = cursor.execute("SELECT * FROM query_log ORDER BY query_time DESC LIMIT 250").fetchall()
+
+    def top_by_count(seq, N=20):
+        counts = { }
+        for item in seq:
+            counts[item] = counts.get(item, 0) + 1
+        return sorted(counts.items(), key = lambda kv : kv[1], reverse=True)[0:N]
+
+    # Find the most frequent query.
+    by_query = top_by_count(q["query"] for q in recent_queries)
+
+    # ... and where the query resulted in no matches.
+    by_query_no_results = top_by_count(q["query"] for q in recent_queries if q["documents_matched"] == "")
+
+    # Find the most frequently returned document.
+    by_doc = top_by_count(
+        resource_id for resource_id in
+          sum((q["documents_matched"].split(" ") for q in recent_queries), [])
+          if resource_id != "" # for queries that match nothing
+        )
+
+    return jsonify(
+        most_freq_queries=by_query,
+        most_freq_queries_no_results=by_query_no_results,
+        most_freq_docs=by_doc,
+        )
+
+
+################################################################################
 
 # main entry point
 
