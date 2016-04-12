@@ -1,7 +1,9 @@
 # Experimental text analysis routines.
 
-import re, math
+import re, math, sys, os.path
 from collections import defaultdict
+
+import rtyaml
 
 # pip3 install nltk
 # python3 -m nltk.downloader "punkt"
@@ -9,7 +11,80 @@ from nltk.tokenize import sent_tokenize
 
 from server import get_document_text, all_resources
 
+# Globals
+
 max_ngram_size = 3
+
+# Functions
+
+def build_corpus_model():
+    # Build the corpus of n-grams in all document text.
+
+    corpus_token_counts = defaultdict(lambda : defaultdict(lambda : 0))
+
+    for res in all_resources.values():
+        # Only process documents.
+        if res["type"] not in ("authoritative-document", "policy-document"):
+            continue
+
+        # Get the full document text, if possible.
+        text = get_document_text(res, None)
+        if not text:
+            continue
+
+        # Draw out n-grams and build up token counts.
+        for n in range(1, max_ngram_size+1):
+            for boost, ngram in extract_ngrams(n, text):
+                corpus_token_counts[n][ngram] += boost
+
+    # Divide the counts by the total number of tokens (really ngrams for each n)
+    # so we have relative frequencies.
+    normalize_ngrams(corpus_token_counts)
+
+    return corpus_token_counts
+
+def compute_top_terms(res, corpus_token_counts, text):
+    # Get the n-gram counts in this document.
+    doc_token_counts = defaultdict(lambda : defaultdict(lambda : 0))
+    for n in range(1, max_ngram_size+1):
+        for boost, ngram in extract_ngrams(n, text):
+            doc_token_counts[n][ngram] += boost
+
+    # Divide the counts by the total number of tokens (really ngrams for each n)
+    # so we have relative frequencies.
+    normalize_ngrams(doc_token_counts)
+
+    # Compute the TF-IDF of each n-gram.
+    scores = { }
+    for n in range(1, max_ngram_size+1):
+        for ngram, doc_count in sorted(doc_token_counts[n].items(), key=lambda kv : -kv[1]):
+            tf = get_log_frequency(ngram, doc_token_counts)
+
+            # Because the document is much smaller than the corpus,
+            # infrequent words in the document can appear to have
+            # a much higher relative frequency in the document than
+            # in the corpus. For words whose log frequency approaches
+            # one occurrence, scale down their log frequency to be
+            # as if it were one occurrence in the entire corpus.
+            l1 = math.log(doc_token_counts["_ONE"][len(ngram)])
+            l2 = math.log(corpus_token_counts["_ONE"][len(ngram)])
+            qmax = 2.25
+            q = tf - l1
+            if q < qmax:
+                # The closer the frequency is to one occurrence in
+                # the document the more it is dragged to the relative
+                # frequency of one ocurrence in the whole corpus.
+                if q < 0 or l1 < l2: raise ValueError()
+                tf = (l1+qmax)*(q/qmax) + l2*(1-(q/qmax))
+
+            df = get_adjusted_ngram_log_freq(ngram, corpus_token_counts)
+            tf_itf = tf - df # they're in log space, so we subtract
+
+            scores[ngram] = tf_itf
+
+    # Sort by TF-ITF (descending), and then for the sake of producing
+    # stable output across runs, sort then by the ngram text.
+    return sorted(scores.items(), key = lambda kv : (-kv[1], str(kv[0])))
 
 def extract_ngrams(n, text):
     # Extract n-grams from document text.
@@ -95,89 +170,82 @@ def get_adjusted_ngram_log_freq(ngram, corpus):
         ret = max(ret, get_estimated_log_frequency(ngram, corpus))
     return ret
 
-# Build the corpus of all document text.
+# Main Entry Point
 
-corpus_token_counts = defaultdict(lambda : defaultdict(lambda : 0))
-for res in all_resources.values():
-    # Only process documents.
-    if res["type"] not in ("authoritative-document", "policy-document"):
-        continue
+if __name__ == "__main__":
+    corpus_token_counts = build_corpus_model()
 
-    # Get the full document text, if possible.
-    text = get_document_text(res, None)
-    if not text:
-        continue
+    if len(sys.argv) == 1:
+        # Perform TF-ITF on each document and print the n-grams
+        # that have the highest score per document.
 
-    # Draw out n-grams and build up token counts.
-    for n in range(1, max_ngram_size+1):
-        for boost, ngram in extract_ngrams(n, text):
-            corpus_token_counts[n][ngram] += boost
+        for res in sorted(all_resources):
+            # Only process documents.
+            res = all_resources[res]
+            if res["type"] not in ("authoritative-document", "policy-document"):
+                continue
 
-# Divide the counts by the total number of tokens (really ngrams for each n)
-# so we have relative frequencies.
-normalize_ngrams(corpus_token_counts)
+            print(res["id"])
+            print("-" * len(res["id"]))
 
-# Now perform TF-ITF on each document and show the n-grams
-# that have the highest score per document.
+            # Get the full document text, if possible.
+            text = get_document_text(res, None)
+            if not text:
+                continue
 
-for res in sorted(all_resources):
-    # Only process documents.
-    res = all_resources[res]
-    if res["type"] not in ("authoritative-document", "policy-document"):
-        continue
+            # Compute terms.
+            terms = compute_top_terms(res, corpus_token_counts, text)
 
-    print(res["id"])
-    print("-" * len(res["id"]))
+            for ngram, score in terms[0:15]:
+                #print(score, ngram)
+                print(" ".join(ngram))
 
-    # Get the full document text, if possible.
-    text = get_document_text(res, None)
-    if not text:
-        continue
+            print()
 
-    # Get the n-gram counts in this document.
-    doc_token_counts = defaultdict(lambda : defaultdict(lambda : 0))
-    for n in range(1, max_ngram_size+1):
-        for boost, ngram in extract_ngrams(n, text):
-            doc_token_counts[n][ngram] += boost
+    else:
+        # The command-line argument is a document ID to add terms
+        # into.
 
-    # Divide the counts by the total number of tokens (really ngrams for each n)
-    # so we have relative frequencies.
-    normalize_ngrams(doc_token_counts)
+        res = all_resources[sys.argv[1]]
 
-    # Compute the TF-IDF of each n-gram.
-    scores = { }
-    for n in range(1, max_ngram_size+1):
-        for ngram, doc_count in sorted(doc_token_counts[n].items(), key=lambda kv : -kv[1]):
-            tf = get_log_frequency(ngram, doc_token_counts)
+        # Get the full document text.
+        text = get_document_text(res, None)
+        if not text:
+            # Use pdftotext as a fallback.
+            import urllib.request, subprocess
+            text = subprocess.check_output(["pdftotext", "-", "-"],
+                input=urllib.request.urlopen(res["authoritative-url"]).read())\
+                .decode("utf8")
 
-            # Because the document is much smaller than the corpus,
-            # infrequent words in the document can appear to have
-            # a much higher relative frequency in the document than
-            # in the corpus. For words whose log frequency approaches
-            # one occurrence, scale down their log frequency to be
-            # as if it were one occurrence in the entire corpus.
-            l1 = math.log(doc_token_counts["_ONE"][len(ngram)])
-            l2 = math.log(corpus_token_counts["_ONE"][len(ngram)])
-            qmax = 2.25
-            q = tf - l1
-            if q < qmax:
-                # The closer the frequency is to one occurrence in
-                # the document the more it is dragged to the relative
-                # frequency of one ocurrence in the whole corpus.
-                if q < 0 or l1 < l2: raise ValueError()
-                tf = (l1+qmax)*(q/qmax) + l2*(1-(q/qmax))
+            if not text:
+                print("Document %s has no fetchable text." % res['id'])
+                sys.exit(1)
 
-            df = get_adjusted_ngram_log_freq(ngram, corpus_token_counts)
-            tf_itf = tf - df # they're in log space, so we subtract
+        # Compute terms.
+        terms = compute_top_terms(res, corpus_token_counts, text)
+        if len(terms) == 0:
+            print("Didn't find any terms.")
+            sys.exit(1)
 
-            scores[ngram] = tf_itf
+        # Add terms.
+        res.setdefault("terms", [])
+        for ngram, score in terms[0:30]:
+            # Convert tuple back to text.
+            term = " ".join(ngram)
 
-    # Sort by TF-ITF (descending), and then for the sake of producing
-    # stable output across runs, sort then by the ngram text.
-    top_ngrams = sorted(scores.items(), key = lambda kv : (-kv[1], str(kv[0])))
-    for ngram, score in top_ngrams[0:15]:
-        #print(score, ngram)
-        print(" ".join(ngram))
+            # Already has this term?
+            if len([t for t in res["terms"] if t["text"] == term]) > 0:
+                print("Already has term", term)
+                continue
 
+            # Add.
+            print("Adding term", term)
+            res["terms"].append({
+                "text": term
+            })
 
-    print()
+        # Save. Guess its file name -- hopefully based on its ID.
+        fn = os.path.join("resources", "documents", res["id"] + ".yaml")
+        with open(fn, "w") as f:
+            f.write(rtyaml.dump(res))
+

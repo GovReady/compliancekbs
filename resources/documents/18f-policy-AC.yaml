@@ -41,6 +41,34 @@ terms:
   usage: definition
 - text: Director of Compliance
   usage: definition
+- text: 18F must
+- text: shall
+- text: 18F shall
+- text: access shall
+- text: must
+- text: publicly accessible
+- text: 18F information
+- text: accounts
+- text: of duties
+- text: restrict
+- text: restrict access
+- text: 18F information systems
+- text: shall use
+- text: 18F shall use
+- text: duties
+- text: publicly
+- text: separation of
+- text: access
+- text: accessible
+- text: nonpublic information
+- text: users
+- text: shall be
+- text: access to
+- text: nonpublic
+- text: cryptography to
+- text: temporary accounts
+- text: accounts or roles
+- text: authorized
 owner: 18F
 type: policy-document
 authoritative-url: https://raw.githubusercontent.com/18F/compliance-docs/master/AC-Policy.md
