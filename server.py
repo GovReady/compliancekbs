@@ -39,7 +39,7 @@ def get_and_cache_remote_resource(resource_id, fn, url, charset):
 
     # Get it from a network request.
     try:
-        print(url)
+        print("[GET]", url + "...")
         res = urllib.request.urlopen(url).read().decode(charset)
     except urllib.error.HTTPError as e:
         # Silently ignore errors.
@@ -300,7 +300,7 @@ def term_matches_query_recursively(query, resource, term, relation_to=None, seen
         # If the term says what page it is on, and if we can get the text of that page,
         # then replace the context with context from that page around *that term*
         # (i.e. look for the term in the page, not the original query in the page).
-        page_text = get_page_text(resource, term.get('page'))
+        page_text = get_document_text(resource, term.get('page'))
         if page_text:
             for ctx1 in field_matches_query(term["text"], page_text):
                 ctx = ctx1
@@ -461,7 +461,7 @@ def get_thumbnail_url(doc, pagenumber, small):
     # a PDF, and then to an image, and return that image as a data: URL.
     elif doc.get("format") == "markdown" and os.path.exists("/usr/bin/htmldoc") and os.path.exists("/usr/bin/pdftoppm"):
         # Download the Markdown file.
-        md = get_page_text(doc, pagenumber)
+        md = get_document_text(doc, pagenumber)
 
         # If we got it...
         if md:
@@ -499,24 +499,32 @@ def get_page_url(doc, pagenumber):
             documentcloud_id[0], documentcloud_id[1], pagenumber)
     return None
 
-def get_page_text(doc, pagenumber):
+def get_document_text(doc, pagenumber):
     # Returns the full text of a page of a document.
 
     # Get the text of the page from DocumentCloud, if the document is on DocumentCloud.
     documentcloud_id = get_documentcloud_document_id(doc)
-    if documentcloud_id and pagenumber is not None:
+    if documentcloud_id:
         # We can use the DocumentCloud API to get the URL to page text, but in the
         # interests of speed, construct the URL ourselves.
-        #url = query_documentcloud_api(documentcloud_id)["document"]["resources"]["page"]["text"].format(
-        #    page=pagenumber,
-        #)
-        url = "https://www.documentcloud.org/documents/%s/pages/%s-p%d.txt" % (
-            documentcloud_id[0], documentcloud_id[1], pagenumber)
+        # doccloud = query_documentcloud_api(documentcloud_id)["document"]["resources"]
+        if not pagenumber:
+	        #url = doccloud["text"]
+	        url = "https://assets.documentcloud.org/documents/%s/%s.txt" % (
+	            documentcloud_id[0], documentcloud_id[1])
+	        fn = "document.txt"
+        else:
+	        #url = doccloud["page"]["text"].format(
+	        #    page=pagenumber,
+	        #)
+	        url = "https://www.documentcloud.org/documents/%s/pages/%s-p%d.txt" % (
+	            documentcloud_id[0], documentcloud_id[1], pagenumber)
+	       	fn = "page-%d.txt" % pagenumber
 
         # Download the text at the URL.
         # TODO: What encoding is it coming back as? Probably better to use requests
         # library or something that handles that automatically. Assume UTF-8 now.
-        return get_and_cache_remote_resource(doc["id"], "page-%d.txt" % pagenumber, url, "utf8")
+        return get_and_cache_remote_resource(doc["id"], fn, url, "utf8")
 
     # If the document is a Markdown document, fetch the text from the authoritative-url.
     # Return the raw Markdown, which is good enough to be the text of the page.
