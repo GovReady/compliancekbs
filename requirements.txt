@@ -3,4 +3,3 @@ commonmark
 flask
 pyPDF2
 nltk
-pdf2text
