@@ -111,6 +111,18 @@ GovReady Compliance Knowledge Base Prototype API Demo
                         // Okay we have search results now. Clear old results.
                         $('#results').text('')
 
+                        if (res.results.length == 0) {
+                            // in order to get the query HTML-escaped, build the
+                            // message in the DOM
+                            var msg = $("<div>The phrase \"<span></span>\" is not currently in our fixed vocabulary search. We update the vocabulary regularly.</div>");
+                            msg.find("span").text(qs.q);
+                            show_modal_error(
+                                "GovReady Compliance Knowledge Base",
+                                msg
+                                );
+                            return;
+                        }
+
                         // Add in new results.
                         res.results.forEach(add_result_item);
                     }
