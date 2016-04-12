@@ -1,3 +1,5 @@
 rtyaml
 commonmark
 flask
+pyPDF2
+nltk
