@@ -1,4 +1,5 @@
 access_log.db
+documentcloud.ini
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

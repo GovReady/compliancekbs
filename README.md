@@ -30,6 +30,35 @@ The server logs queries to an sqlite database. To get the log, run:
 The columns are the date/time of the query (in UTC), the user's IP address, the user's query, a space-separated list of document IDs that were returned by the query (in the order in which they were returned), and the execution duration of the query in milliseconds.
 
 
+Other tools
+-----------
+
+A few additional scripts are here:
+
+* `create-document-yaml.py` downloads a PDF, extracts some of its metadata, and creates a new YAML file for it using a new resource ID that you provide. You must go into the YAML file and change its `type` field to the right value afterwards.
+
+* `upload-document-to-documentcloud.py` takes a resource ID and uploads that document to DocumentCloud, and updates the YAML by setting the `url` field to the DocumentCloud URL. Or if the YAML already has a `url` that is pointing to DocumentCloud, the DocumentCloud metadata for the document is updated based on the content of the YAML file.
+
+* `text-analysis.py` performs a text analysis to find interesting phrases in a document. When run without command-line arguments, extracts phrases from all documents. Or, specify a resource ID to extract phrases from that document and update the YAML file, appending new terms to the end.
+
+The text analysis script has an additional dependency that you must fetch this way:
+
+	python3 -m nltk.downloader punkt
+
+The DocumentCloud uploader script requires that you create a file named `documentcloud.ini` with:
+
+	DOCUMENTCLOUD_USERNAME=yourusername
+	DOCUMENTCLOUD_PASSWORD=yourpassword
+
+The workflow for creating a new document YAML file is:
+
+	python3 create-document-yaml.py nist-sp-800-145 http://dx.doi.org/10.6028/NIST.SP.800-145
+	python3 upload-document-to-documentcloud.py nist-sp-800-145
+	python3 text-analysis.py nist-sp-800-145
+
+where `nist-sp-800-145` is a new resource ID that you assign. In the first command, a URL to the PDF for the document is given.
+
+
 YAML schema
 -----------
 

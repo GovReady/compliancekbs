@@ -3,3 +3,4 @@ commonmark
 flask
 pyPDF2
 nltk
+python-documentcloud

@@ -5,8 +5,6 @@ from collections import defaultdict
 
 import rtyaml
 
-# pip3 install nltk
-# python3 -m nltk.downloader "punkt"
 from nltk.tokenize import sent_tokenize
 
 from server import get_document_text, all_resources

@@ -2,7 +2,6 @@
 #
 # usage:
 #
-# pip3 install pyPDF2
 # python3 create-document-yaml.py resource-id http://url/to/pdf
 #
 # You choose the resource-id. It goes into the file name 
