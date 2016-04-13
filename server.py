@@ -81,7 +81,7 @@ def create_db_tables(access_log):
             # Set initial db schema.
             print("Created db table", table_name)
             if table_name == "meta":
-                c.execute("INSERT INTO meta VALUES('dbschemaver', ?)", str(1))
+                c.execute("INSERT INTO meta VALUES('dbschemaver', ?)", str(2))
         except sqlite3.OperationalError as e:
             # If we get an error that it already exists, that's perfect
             # --- nothing for us to do. Other errors are errors.
