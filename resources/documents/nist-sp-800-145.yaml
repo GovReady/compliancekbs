@@ -1,10 +1,16 @@
 id: nist-sp-800-145
+<<<<<<< HEAD
+type: policy-document
+=======
 type: authoritative-document
+>>>>>>> b0f03134fb9ae9e002bd919b700b0f179914fd69
 title: NIST SP 800-145, The NIST Definition of Cloud Computing
 owner: ~
 url: http://dx.doi.org/10.6028/NIST.SP.800-145
 authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-145
 format: pdf
+<<<<<<< HEAD
+=======
 terms:
 - text: consumer
 - text: The cloud infrastructure
@@ -36,3 +42,4 @@ terms:
 - text: does not manage
 - text: infrastructure is provisioned
 - text: is provisioned for
+>>>>>>> b0f03134fb9ae9e002bd919b700b0f179914fd69

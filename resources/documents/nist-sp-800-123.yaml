@@ -1,0 +1,7 @@
+id: nist-sp-800-123
+type: authoritative-document
+title: NIST SP 800-123, Guide to General Server Security
+owner: ~
+url: http://csrc.nist.gov/publications/nistpubs/800-123/SP800-123.pdf
+authoritative-url: http://csrc.nist.gov/publications/nistpubs/800-123/SP800-123.pdf
+format: pdf

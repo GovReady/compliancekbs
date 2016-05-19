@@ -5,6 +5,7 @@ documentcloud.ini
 .bash_history
 cache/
 vm/.vagrant/
+.gitconfig
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,0 +1,22 @@
+id: nist-sp-800-161
+type: authoritative-document
+title: Supply Chain Risk Management Practices for Federal Information Systems and
+  Organizations
+alt-titles:
+- A341Federal agencies are concerned about the risks associated with information and
+  communications technology (ICT) products and services that may contain potentially
+  malicious functionality, are counterfeit, or are vulnerable due to poor manufacturing
+  and development practices within the ICT supply chain. These risks are associated
+  with the federal agencies? decreased visibility into, understanding of, and control
+  over how the technology that they acquire is developed, integrated and deployed,
+  as well as the processes, procedures, and practices used to assure the integrity,
+  security, resilience, and quality of the products and services. This publication
+  provides guidance to federal agencies on identifying, assessing, and mitigating
+  ICT supply chain risks at all levels of their organizations. This publication integrates
+  ICT supply chain risk management (SCRM) into federal agency risk management activities
+  by applying a multi-tiered, SCRM-specific approach, including guidance on assessing
+  supply chain risk and applying mitigation activities.
+owner: ~
+url: http://dx.doi.org/10.6028/NIST.SP.800-161
+authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-161
+format: pdf
