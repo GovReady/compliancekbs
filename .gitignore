@@ -1,6 +1,11 @@
 access_log.db
 documentcloud.ini
 
+# generated files
+.bash_history
+cache/
+vm/.vagrant/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

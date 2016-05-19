@@ -37,6 +37,8 @@ A few additional scripts are here:
 
 * `create-document-yaml.py` downloads a PDF, extracts some of its metadata, and creates a new YAML file for it using a new resource ID that you provide. You must go into the YAML file and change its `type` field to the right value afterwards.
 
+* `create-html-yaml.py` downloads a HTML file, extracts some of its metadata, and creates a new YAML file for it using a new resource ID that you provide. You must go into the YAML file and change its `type` field to the right value afterwards.
+
 * `upload-document-to-documentcloud.py` takes a resource ID and uploads that document to DocumentCloud, and updates the YAML by setting the `url` field to the DocumentCloud URL. Or if the YAML already has a `url` that is pointing to DocumentCloud, the DocumentCloud metadata for the document is updated based on the content of the YAML file.
 
 * `text-analysis.py` performs a text analysis to find interesting phrases in a document. When run without command-line arguments, extracts phrases from all documents. Or, specify a resource ID to extract phrases from that document and update the YAML file, appending new terms to the end.
@@ -58,6 +60,11 @@ The workflow for creating a new document YAML file is:
 
 where `nist-sp-800-145` is a new resource ID that you assign. In the first command, a URL to the PDF for the document is given.
 
+The workflow for creating a new document YAML file for an HTML file is:
+
+	python3 create-html-yaml.py table-rhel7-srgmap http://people.redhat.com/swells/scap-security-guide/RHEL/7/output/table-rhel7-srgmap.html
+	# no uploading of HTML to documentcloud is currently supported
+	# no text analysis of HTML docs is currently supported
 
 YAML schema
 -----------

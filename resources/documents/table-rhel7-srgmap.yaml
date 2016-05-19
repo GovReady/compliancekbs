@@ -1,0 +1,34 @@
+id: table-rhel7-srgmap
+type: authoritative-document
+title: "CCIs from Operating System Security Requirements Guide Mapped to Guide to the Secure Configuration of Red Hat Enterprise Linux 7"
+owner: OpenSCAP
+url: http://people.redhat.com/swells/scap-security-guide/RHEL/7/output/table-rhel7-srgmap.html
+authoritative-url: http://people.redhat.com/swells/scap-security-guide/RHEL/7/output/table-rhel7-srgmap.html
+format: html
+terms:
+  - text: Security Requirements Guide
+    same-as:
+      term: SRG
+  - text: SRG
+    page: 10
+    same-as:
+      term: Security Requirements Guide
+
+  - text: Control Correlation Identifier
+    same-as:
+      term: CCI
+  - text: CCI
+    same-as:
+      term: Control Correlation Identifier
+
+  - text: RedHat Enterprise Linux
+    same-as:
+      term: RHEL
+      term: RHEL7
+  - text: RHEL
+    same-as:
+      term: RedHat Enterprise Linux
+  - text: RHEL7
+    same-as: 
+      term: RHEL
+      term: RedHat Enterprise Linux
