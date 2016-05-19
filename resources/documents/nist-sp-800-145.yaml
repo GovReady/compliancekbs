@@ -1,0 +1,38 @@
+id: nist-sp-800-145
+type: authoritative-document
+title: NIST SP 800-145, The NIST Definition of Cloud Computing
+owner: ~
+url: http://dx.doi.org/10.6028/NIST.SP.800-145
+authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-145
+format: pdf
+terms:
+- text: consumer
+- text: The cloud infrastructure
+- text: cloud
+- text: layer
+- text: cloud infrastructure
+- text: cloud infrastructure is
+- text: the consumer
+- text: Publication 800 145
+- text: the consumer is
+- text: 800 145
+- text: consumer is
+- text: physical layer
+- text: infrastructure is
+- text: computing
+- text: provisioned
+- text: cloud computing
+- text: Definition of Cloud
+- text: NIST Definition of
+- text: The NIST Definition
+- text: The capability provided
+- text: The consumer does
+- text: and operated by
+- text: be owned managed
+- text: combination of them
+- text: consumer does not
+- text: consumer is to
+- text: control the underlying
+- text: does not manage
+- text: infrastructure is provisioned
+- text: is provisioned for

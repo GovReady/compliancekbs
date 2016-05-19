@@ -1,0 +1,35 @@
+id: table-rhel7-stig
+type: authoritative-document
+title: Rules In Pre-release Final STIG for Red Hat Enterprise Linux 7
+owner: OpenSCAP
+year: 2016
+url: http://people.redhat.com/swells/scap-security-guide/RHEL/7/output/table-rhel7-stig.html
+authoritative-url: http://people.redhat.com/swells/scap-security-guide/RHEL/7/output/table-rhel7-stig.html
+format: html
+terms:
+  - text: Security Technical Implementation Guide
+    same-as:
+      term: SRG
+  - text: SRG
+    page: 10
+    same-as:
+      term: Security Technical Implementation Guide
+
+  - text: Control Correlation Identifier
+    same-as:
+      term: CCI
+  - text: CCI
+    same-as:
+      term: Control Correlation Identifier
+
+  - text: RedHat Enterprise Linux
+    same-as:
+      term: RHEL
+      term: RHEL7
+  - text: RHEL
+    same-as:
+      term: RedHat Enterprise Linux
+  - text: RHEL7
+    same-as: 
+      term: RHEL
+      term: RedHat Enterprise Linux

@@ -1,0 +1,39 @@
+id: IA_STIG_SCAP_and_Data_Metrics
+type: presentation
+title: Microsoft PowerPoint - STIG SCAP and Data Metrics-v2
+owner: DISA
+year: 2010
+url: http://www.disa.mil/~/media/Files/DISA/News/Conference/CIF/Briefing/IA_STIG_SCAP_and_Data_Metrics.pdf
+authoritative-url: http://www.disa.mil/~/media/Files/DISA/News/Conference/CIF/Briefing/IA_STIG_SCAP_and_Data_Metrics.pdf
+format: pdf
+terms:
+  - text: Security Requirements Guide
+    same-as: 
+      term: SRG
+  - text: SRG
+    page: 17
+    same-as: 
+      term: Security Requirements Guide
+  - text: Security Technical Implementation Guide
+    same-as: 
+      term: STIG
+  - text: STIG
+    page: 3
+    same-as: 
+      term: Security Technical Implementation Guide
+  - text: Control Correlation Identifier
+    page: 16
+    same-as: 
+      term: CCI
+  - text: CCI
+    same-as: 
+      term: Control Correlation Identifier
+  - text: Security Content Automation Protocol
+    same-as: 
+      term: SCAP
+  - text: SCAP
+    page: 12
+    same-as: 
+      term: Security Content Automation Protocol
+  - text: STIG Development Cycle
+    page: 7
