@@ -3,6 +3,6 @@ type: authoritative-document
 title: 'NIST SP 800-126 Revision 2, The Technical Specification for the Security Content
   Automation Protocol (SCAP): SCAP Version 1.1'
 owner: ~
-url: http://dx.doi.org/10.6028/NIST.SP.800-126r2
+url: https://www.documentcloud.org/documents/2840048-NIST-SP-800-126-Revision-2-The-Technical.html
 authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-126r2
 format: pdf
