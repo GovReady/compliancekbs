@@ -1,0 +1,16 @@
+id: nist-800-125-B
+type: authoritative-document
+title: Secure Virtual Network Configuration for Virtual Machine (VM) Protection
+alt-titles:
+- Virtual machines (VMs) are key resources to be protected since they are the compute
+  engines hosting mission-critical applications. Since VMs are end nodes of a virtual
+  network, the configuration of the virtual network is an important element in the
+  security of the VMs and their hosted applications. The virtual network configuration
+  areas discussed in this document are network segmentation, network path redundancy,
+  traffic control using firewalls, and VM traffic monitoring. This document analyzes
+  the configuration options under these areas and presents a corresponding set of
+  recommendations for secure virtual network configuration for VM protection.
+owner: ~
+url: https://www.documentcloud.org/documents/2840057-Secure-Virtual-Network-Configuration-for-Virtual.html
+authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-125B
+format: pdf
