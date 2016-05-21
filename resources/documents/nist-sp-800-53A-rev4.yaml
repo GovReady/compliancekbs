@@ -1,0 +1,20 @@
+id: nist-sp-800-53A-rev4
+type: authoritative-document
+title: 'Assessing Security and Privacy Controls in Federal Information Systems and
+  Organizations: Building Effective Assessment Plans'
+alt-titles:
+- A341This publication provides a set of procedures for conducting assessments of
+  security controls and privacy controls employed within federal information systems
+  and organizations. The assessment procedures, executed at various phases of the
+  system development life cycle, are consistent with the security and privacy controls
+  in NIST Special Publication 800-53, Revision 4. The procedures are customizable
+  and can be easily tailored to provide organizations with the needed flexibility
+  to conduct security control assessments and privacy control assessments that support
+  organizational risk management processes and that are aligned with the stated risk
+  tolerance of the organization. Information on building effective security assessment
+  plans and privacy assessment plans is also provided along with guidance on analyzing
+  assessment results.
+owner: ~
+url: https://www.documentcloud.org/documents/2840703-Assessing-Security-and-Privacy-Controls-in.html
+authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-53Ar4
+format: pdf
