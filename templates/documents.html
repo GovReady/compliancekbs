@@ -1,0 +1,60 @@
+{% extends "template.html" %}
+
+{% block h1 %}
+GovReady Compliance Roles
+{% endblock %}
+
+{% block styles %}
+<style>
+#roles {
+    margin-top: 1.5em;
+    padding: 0;
+}
+#roles li {
+    margin-bottom: 1em;
+    list-style: none;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2>Documents</h2>
+    <ul id="documents">
+    </ul>
+</div> <!-- /container -->
+
+<div id="item-template" style="display: none">
+    <li>
+        <a>role</a>
+        <div class="occurrences">
+        </div>
+    </li>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function() {
+    ajax_with_indicator({
+        url: "/api/documents",
+        method: "GET",
+        success: function(res) {
+            var container = $("#documents");
+            container.text(res.documents.length+" Documents in Corpus");
+            res.documents.forEach(function(document) {
+                var n = $("#item-template > li").clone();
+                container.append(n);
+
+                // main link
+                n.find('a').text(document.title);
+                n.find('a').attr('href', '/#q=' + encodeURIComponent(document.title));
+
+                // documents it occurs in
+                // n.find('.occurrences').text(term.map(function(item) { return item.document }).join(", "));
+            });
+        }
+    })
+})
+</script>
+{% endblock %}

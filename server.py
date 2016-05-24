@@ -121,6 +121,11 @@ def show_roles_page():
     # The /roles URL shows the roles listing page.
     return render_template('roles.html')
 
+@app.route('/documents')
+def show_documents_page():
+    # The /documents URL shows the documents listing page.
+    return render_template('documents.html')
+
 @app.route('/query-stats')
 def show_query_stats_page():
     # The /roles URL shows the roles listing page.
@@ -192,6 +197,13 @@ def iter_roles():
     # represent roles.
     for res in all_resources.values():
         if res["type"] in ("role",):
+            yield res
+
+def iter_documents():
+    # Returns a generator that iterates through all of the resources that
+    # represent roles.
+    for res in all_resources.values():
+        if res["type"] in ("policy-document","authoritative-document"):
             yield res
 
 # Search core routines.
@@ -573,6 +585,15 @@ def roles():
     # directly.
     roles = sorted(iter_roles(), key=lambda role : (role["title"].lower(), role["title"]))
     return jsonify(roles=roles)
+
+# Documents listing.
+
+@app.route('/api/documents', methods=['GET'])
+def documents():
+    # Get a list of all of the documents and just return the YAML data
+    # directly.
+    documents = sorted(iter_documents(), key=lambda document : (document["title"].lower(), document["title"]))
+    return jsonify(documents=documents)
 
 ################################################################################
 
