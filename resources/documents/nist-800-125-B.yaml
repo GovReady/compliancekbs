@@ -10,7 +10,7 @@ alt-titles:
   traffic control using firewalls, and VM traffic monitoring. This document analyzes
   the configuration options under these areas and presents a corresponding set of
   recommendations for secure virtual network configuration for VM protection.
-owner: ~
+owner: NIST
 url: https://www.documentcloud.org/documents/2840057-Secure-Virtual-Network-Configuration-for-Virtual.html
 authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-125B
 format: pdf

@@ -1,7 +1,7 @@
 id: nist-sp-800-145
 type: authoritative-document
 title: NIST SP 800-145, The NIST Definition of Cloud Computing
-owner: ~
+owner: NIST
 url: http://dx.doi.org/10.6028/NIST.SP.800-145
 authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-145
 format: pdf
@@ -36,4 +36,3 @@ terms:
 - text: does not manage
 - text: infrastructure is provisioned
 - text: is provisioned for
-

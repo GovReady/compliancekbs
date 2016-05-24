@@ -1,7 +1,7 @@
 id: nist-sp-800-44-ver2
 type: authoritative-document
 title: NIST SP 800-44 Version 2, Guidelines on Securing Public Web Servers
-owner: ~
+owner: NIST
 url: https://www.documentcloud.org/documents/2840710-NIST-SP-800-44-Version-2-Guidelines-on-Securing.html
 authoritative-url: http://csrc.nist.gov/publications/nistpubs/800-44-ver2/SP800-44v2.pdf
 format: pdf
