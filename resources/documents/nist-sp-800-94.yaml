@@ -1,7 +1,7 @@
 id: nist-sp-800-94
 type: authoritative-document
 title: NIST SP 800-94, Guide to Intrusion Detection and Prevention Systems (IDPS)
-owner: ~
+owner: NIST
 url: http://csrc.nist.gov/publications/nistpubs/800-94/SP800-94.pdf
 authoritative-url: http://csrc.nist.gov/publications/nistpubs/800-94/SP800-94.pdf
 format: pdf
