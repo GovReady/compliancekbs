@@ -2,7 +2,7 @@ id: nist-sp-800-137
 type: authoritative-document
 title: NIST SP 800-137, Information Security Continuous Monitoring (ISCM) for Federal
   Information Systems and Organizations
-owner: ~
+owner: NIST
 url: https://www.documentcloud.org/documents/2840023-NIST-SP-800-137-Information-Security-Continuous.html
 authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-137
 format: pdf

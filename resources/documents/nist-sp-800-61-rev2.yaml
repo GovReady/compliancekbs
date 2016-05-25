@@ -11,7 +11,7 @@ alt-titles:
   for analyzing incident-related data and determining the appropriate response to
   each incident. The guidelines can be followed independently of particular hardware
   platforms, operating systems, protocols, or applications.
-owner: ~
+owner: NIST
 url: https://www.documentcloud.org/documents/2840689-Computer-Security-Incident-Handling-Guide.html
 authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-61r2
 format: pdf
