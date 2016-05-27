@@ -59,8 +59,8 @@ def get_and_cache_remote_resource(resource_id, fn, url, charset):
 all_resources = { }
 for fn in glob.glob("resources/*/*.yaml"):
     with open(fn) as f:
-        res = rtyaml.load(f)
-        all_resources[res['id']] = res
+        for res in rtyaml.load_all(f): # a YAML file may contain more than one document
+            all_resources[res['id']] = res
 
 ################################################################################
 
