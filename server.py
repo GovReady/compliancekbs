@@ -189,7 +189,7 @@ def iter_searchable_resources():
     # Returns a generator that iterates through all of the resources that
     # can be searched by the API (documents & roles).
     for res in all_resources.values():
-        if res["type"] in ("authoritative-document", "policy-document", "role"):
+        if res["type"] in ("authoritative-document", "policy-document", "role", "control"):
             yield res
 
 def iter_roles():
