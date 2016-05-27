@@ -267,6 +267,12 @@ def field_matches_query(query, value):
     # the search query matched. If there is no match, the generator simply
     # contains nothing.
 
+    # A final asterisk means match a prefix.
+    match_prefix = False
+    if query.endswith("*"):
+        match_prefix = True
+        query = query[:-1] # chop off the asterisk
+
     # Make a simple regex out of the query string:
     #  letters and numbers in the query must match example
     #  other characters match against any single character or no character
@@ -277,12 +283,15 @@ def field_matches_query(query, value):
         for c in query
     ])
 
-    # The regex matches all word prefixes (i.e. at start of the string
-    # or after any non-word character).
-    r = "(?:^|\W)" + r
+    if not match_prefix:
+        # The regex matches all whole words.
+        r = "(?:^|\W)" + r + "(?:\W|$)"
+    else:
+        # The regex matches all word prefixes (i.e. at start of the string
+        # or after any non-word character).
+        r = "(?:^|\W)" + r
 
     # Find all occurrences of this regex in the string.
-
     for m in re.finditer(r, value, re.I):
         # Generate and yield an HTML snippet that shows some context
         # before and after the match, with the match in bold.
