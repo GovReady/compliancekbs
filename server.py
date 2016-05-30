@@ -59,8 +59,8 @@ def get_and_cache_remote_resource(resource_id, fn, url, charset):
 all_resources = { }
 for fn in glob.glob("resources/*/*.yaml"):
     with open(fn) as f:
-        res = rtyaml.load(f)
-        all_resources[res['id']] = res
+        for res in rtyaml.load_all(f): # a YAML file may contain more than one document
+            all_resources[res['id']] = res
 
 ################################################################################
 
@@ -159,14 +159,17 @@ def search_documents():
         context = doc_matches_query(q, resource)
         if context:
             # If there is any matching context, include the matched
-            # resource in the results, plus the context, etc.
+            # resource in the results, plus the context, etc. The
+            # document's score is the score of the top context.
             results.append({
+                "score": context[0]["score"],
                 "resource": resource, # exactly the same as the YAML file contents
                 "context": context, # an array of contexts
                 "thumbnail": get_thumbnail_url(resource, 1, True), # generate a thumbnail URL
             })
 
-    # TODO: Put the results in some sort of order.
+    # Sort results descending by score.
+    results.sort(key = lambda x : -x["score"])
 
     # Log this query in the database.
     query_end_time = time.time()
@@ -189,7 +192,7 @@ def iter_searchable_resources():
     # Returns a generator that iterates through all of the resources that
     # can be searched by the API (documents & roles).
     for res in all_resources.values():
-        if res["type"] in ("authoritative-document", "policy-document", "role"):
+        if res["type"] in ("authoritative-document", "policy-document", "role", "control"):
             yield res
 
 def iter_roles():
@@ -217,23 +220,33 @@ def doc_matches_query(query, resource):
     context = []
 
     # Perform exact string comparison on resource IDs.
-    if resource["id"] in query.split(" "):
+    # A match yields a score of 1/len(query_words), which
+    # is 1.0 if the query was just the id!
+    query_words = query.split(" ")
+    if resource["id"] in query_words:
         context.append({
+            "score": 1 / len(query_words),
             "html": html.escape(resource["id"]),
         })
 
     # Perform simple text matching on the titles and description of the resource.
 
-    def run_simple_test(value):
-        for ctx in field_matches_query(query, value):
+    def run_simple_test(value, base_score):
+        for score, ctx in field_matches_query(query, value):
             context.append({
+                "score": base_score*score,
                 "html": ctx,
             })
 
-    for field in ('title', 'description'):
-        run_simple_test(resource.get(field, ''))
-    for title in resource.get("alt-titles", []):
-        run_simple_test(title)
+    # Search the titles.
+    for title in [resource.get('title', '')] + resource.get("alt-titles", []):
+        if run_simple_test(title, 1.0):
+            break
+
+    # Search the description.
+
+    for field in ('description',):
+        run_simple_test(resource.get(field, ''), 0.5)
 
     # Compare the query to each 'term' that is listed in the resource's terms list.
     # The query may match against the term itself, or any term that it is
@@ -244,8 +257,10 @@ def doc_matches_query(query, resource):
         # looking recursively at the network of term relationships. Is showing
         # them all helpful? Maybe not (but then we'd need a way to prioritize).
         term_matches = term_matches_query_recursively(query, resource, term)
-        for term_match in term_matches:
+        for term_score, term_match in term_matches:
             context.append({
+                "score": .5 * term_score,
+
                 # Render the match as HTML for display.
                 "html": format_term_match(term_match),
 
@@ -257,15 +272,25 @@ def doc_matches_query(query, resource):
                 "link": get_page_url(resource, term['page']) if 'page' in term else None,
             })
 
+    # Sort the contexts so the most relevant one is on top. The order is
+    # also relevant for determining the document score as a whole.
+    context.sort(key = lambda x : -x["score"])
+
     # Return what we found.
     return context
 
 def field_matches_query(query, value):
     # Test if a string value matches the search query.
     #  
-    # Returns a generator over HTML snippets showing the context in which
-    # the search query matched. If there is no match, the generator simply
+    # Returns a generator over pairs of scores and HTML snippets showing the
+    # context in which the search query matched. If there is no match, the generator simply
     # contains nothing.
+
+    # A final asterisk means match a prefix.
+    match_prefix = False
+    if query.endswith("*"):
+        match_prefix = True
+        query = query[:-1] # chop off the asterisk
 
     # Make a simple regex out of the query string:
     #  letters and numbers in the query must match example
@@ -277,12 +302,15 @@ def field_matches_query(query, value):
         for c in query
     ])
 
-    # The regex matches all word prefixes (i.e. at start of the string
-    # or after any non-word character).
-    r = "(?:^|\W)" + r
+    if not match_prefix:
+        # The regex matches all whole words.
+        r = "(?:^|\W)" + r + "(?:\W|$)"
+    else:
+        # The regex matches all word prefixes (i.e. at start of the string
+        # or after any non-word character).
+        r = "(?:^|\W)" + r
 
     # Find all occurrences of this regex in the string.
-
     for m in re.finditer(r, value, re.I):
         # Generate and yield an HTML snippet that shows some context
         # before and after the match, with the match in bold.
@@ -293,7 +321,22 @@ def field_matches_query(query, value):
         matched_text = value[start:end]
         context_after = value[end:end+175]
 
-        yield html.escape(context_before) + "<b>" + html.escape(matched_text) + "</b>" + html.escape(context_after)
+        # Score this match.
+        if start == 0 and end == len(value):
+            # An exact match is scored 1.0.
+            score = 1.0
+        elif start == 0:
+            # A match at the start of the string is 0.5
+            # plus up to another .25 depending on the
+            # length of the match.
+            score = .5 + .25 * end/len(value)
+        else:
+            # A match in the middle of the string is worth
+            # something proproptional to how close the match
+            # is to the start and how long the match is.
+            score = .25 * (1-start/len(value)) + .25 * end/len(value)
+
+        yield score, html.escape(context_before) + "<b>" + html.escape(matched_text) + "</b>" + html.escape(context_after)
 
 def term_matches_query_recursively(query, resource, term, relation_to=None, seen=set()):
     # Tests if a term matches a query.
@@ -305,7 +348,7 @@ def term_matches_query_recursively(query, resource, term, relation_to=None, seen
 
     # Test if the term itself (its "text") matches the query.
 
-    for ctx in field_matches_query(query, term['text']):
+    for score, ctx in field_matches_query(query, term['text']):
         # It matched, and we have context within the text of the term itself.
         # We could return that context.
         #
@@ -314,14 +357,14 @@ def term_matches_query_recursively(query, resource, term, relation_to=None, seen
         # (i.e. look for the term in the page, not the original query in the page).
         page_text = get_document_text(resource, term.get('page'))
         if page_text:
-            for ctx1 in field_matches_query(term["text"], page_text):
+            for _, ctx1 in field_matches_query(term["text"], page_text):
                 ctx = ctx1
                 break
 
         # Yield the context HTML, plus this resource, and the relation_to from the
         # resource that sent us here (recursively), which let's us reconstruct how
-        # we got here.
-        yield [(ctx, resource, relation_to)]
+        # we got here. The score of this context is the score of the text match.
+        yield (score, [(ctx, resource, relation_to)])
 
         # If the term's text matches, just return the first way it matches
         # and don't bother looking further recursively.
@@ -329,7 +372,7 @@ def term_matches_query_recursively(query, resource, term, relation_to=None, seen
 
     # Look recursively at any terms this term references.
 
-    for relation in ('defined-by', 'same-as'):
+    for rscore1, relation in ((0.9, 'defined-by'), (1.0, 'same-as')):
         if not relation in term: continue
 
         # Look up the document that the referenced term occurs in.
@@ -371,13 +414,16 @@ def term_matches_query_recursively(query, resource, term, relation_to=None, seen
         # See if the referenced term matches this query. Pass through
         # each match found in the recursive call.
 
-        for ctx in term_matches_query_recursively(query, ref_res, ref_term, relation_to=relation, seen=seen):
+        for rscore2, ctx in term_matches_query_recursively(query, ref_res, ref_term, relation_to=relation, seen=seen):
             # Return the context obtained by the recursive call, but prepend
             # information about the original term and the relationship between
             # the original term and the referenced term to make a path, so that
             # we can reconstruct how the document matched through a chain of
             # term relationships.
-            yield [(html.escape(term["text"]), resource, relation_to)] + ctx
+            #
+            # Compared to matching this term directly, a recursive match has a
+            # score that is factored down a bit.
+            yield (.9*rscore1*rscore2, [(html.escape(term["text"]), resource, relation_to)] + ctx)
 
 def format_term_match(path):
     # When a term matches, we get a path from a term in a document that is

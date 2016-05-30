@@ -42,12 +42,12 @@ GovReady Compliance Knowledge Base Prototype API Demo
                         content: "]";
                     }
 
-            #results .result-item .role-thumbnail {
+            #results .result-item .thumbnail-placeholder {
                 border: 1px solid #999;
                 width: 100%;
                 padding: 1em;
             }
-                #results .result-item .role-thumbnail > div {
+                #results .result-item .thumbnail-placeholder > div {
                     text-align: center;
                     font-size: 90%;
                     font-weight: bold;
@@ -80,6 +80,8 @@ GovReady Compliance Knowledge Base Prototype API Demo
                     <h3><a>.</a></h3>
                     <div class="owner">by <span/></div>
                     <div class="context">
+                    </div>
+                    <div class="summary">
                     </div>
                 </div>
             </div>
@@ -145,6 +147,10 @@ GovReady Compliance Knowledge Base Prototype API Demo
                 node.find('.owner').toggle(result.resource.owner != null);
                 node.find('.owner span').text(result.resource.owner);
 
+                // summary
+                if (result.resource.type == "control")
+                    node.find('.summary').text(result.resource.description);
+
                 // thumbnail
                 if (result.resource.type == "policy-document" || result.resource.type == "authoritative-document")
                     // for documents, display the given thumbnail image (provided as a URL), or if there is no thumbnail URL then use our stock "no thumbnail" image
@@ -152,7 +158,11 @@ GovReady Compliance Knowledge Base Prototype API Demo
 
                 else if (result.resource.type == "role")
                     // roles don't have previewable content --- insert some HTML to display something in the thumbnail column
-                    node.find('.thumbnail-container').html("<div class='role-thumbnail'><div>ROLE</div></div>")
+                    node.find('.thumbnail-container').html("<div class='thumbnail-placeholder'><div>ROLE</div></div>")
+
+                else if (result.resource.type == "control")
+                    // controls don't have previewable content --- insert some HTML to display something in the thumbnail column
+                    node.find('.thumbnail-container').html("<div class='thumbnail-placeholder'><div>CONTROL</div></div>")
 
                 // context
                 result.context.forEach(function(item) {

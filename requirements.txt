@@ -1,4 +1,4 @@
-rtyaml
+rtyaml>=0.0.3
 commonmark
 flask
 pyPDF2
