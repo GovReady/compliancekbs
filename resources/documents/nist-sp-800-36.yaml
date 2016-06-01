@@ -12,9 +12,9 @@ appendices: 3
 year-of-publication: 2003
 authors:
   - name: Timothy Grance
-  - organization: National Institue of Standards and Technology (NIST)
+    organization: National Institue of Standards and Technology (NIST)
   - name: Marc Stevens
-  - organization: Booz Allen Hamilton
+    organization: Booz-Allen and Hamilton
   - name: Marissa Myers
-  - organization: Booz Allen Hamilton
+    organization: Booz-Allen and Hamilton
 version: ~
