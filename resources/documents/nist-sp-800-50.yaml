@@ -6,3 +6,12 @@ owner: NIST
 url: https://www.documentcloud.org/documents/2840705-NIST-SP-800-50-Building-an-Information.html
 authoritative-url: http://csrc.nist.gov/publications/nistpubs/800-50/NIST-SP800-50.pdf
 format: pdf
+page-count: 70
+appendices: 4
+year-of-publication: 2003
+authors:
+  - name: Mark Wilson
+    organization: National Institue of Standards and Technology (NIST)
+  - name: Joan Hash
+    organization: National Institue of Standards and Technology (NIST)
+version: ~

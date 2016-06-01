@@ -6,3 +6,14 @@ owner: NIST
 url: https://www.documentcloud.org/documents/2841936-NIST-SP-800-27-Rev-A-Engineering-Principles-for.html
 authoritative-url: http://csrc.nist.gov/publications/nistpubs/800-27A/SP800-27-RevA.pdf
 format: pdf
+page-count: 35
+appendices: 2
+year-of-publication: 2004
+authors:
+  - name: Gary Stoneburner
+    organization: National Institue of Standards and Technology (NIST)
+  - name: Clark Hayden
+    organization: Booz-Allen and Hamilton
+  - name: Alexis Feringa
+    organization: Booz-Allen and Hamilton
+version: Revision A

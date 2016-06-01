@@ -5,3 +5,10 @@ owner: NIST
 url: https://www.documentcloud.org/documents/2840729-NIST-SP-800-33-Underlying-Technical-Models-for.html
 authoritative-url: http://csrc.nist.gov/publications/nistpubs/800-33/sp800-33.pdf
 format: pdf
+page-count: 28
+appendices: 1
+year-of-publication: 2001
+authors:
+  - name: Gary Stoneburner
+    organization: National Instue of Standards and Technology (NIST)
+version: ~
