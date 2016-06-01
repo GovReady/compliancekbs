@@ -7,3 +7,14 @@ owner: NIST
 url: https://www.documentcloud.org/documents/2840725-NIST-SP-800-36-Guide-to-Selection-Information.html
 authoritative-url: http://csrc.nist.gov/publications/nistpubs/800-36/NIST-SP800-36.pdf
 format: pdf
+page-count: 67
+appendices: 3
+year-of-publication: 2003
+authors:
+  - name: Timothy Grance
+  - organization: National Institue of Standards and Technology (NIST)
+  - name: Marc Stevens
+  - organization: Booz Allen Hamilton
+  - name: Marissa Myers
+  - organization: Booz Allen Hamilton
+version: ~
