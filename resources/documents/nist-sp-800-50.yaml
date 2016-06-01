@@ -11,7 +11,7 @@ appendices: 4
 year-of-publication: 2003
 authors:
   - name: Mark Wilson
-  - organization: National Institue of Standards and Technology (NIST)
+    organization: National Institue of Standards and Technology (NIST)
   - name: Joan Hash
-  - organization: National Institue of Standards and Technology (NIST)
+    organization: National Institue of Standards and Technology (NIST)
 version: ~
