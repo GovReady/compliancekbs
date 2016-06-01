@@ -11,9 +11,9 @@ appendices: 2
 year-of-publication: 2004
 authors:
   - name: Gary Stoneburner
-  - organization: National Institue of Standards and Technology (NIST)
+    organization: National Institue of Standards and Technology (NIST)
   - name: Clark Hayden
-  - organization: Booz-Allen and Hamilton
+    organization: Booz-Allen and Hamilton
   - name: Alexis Feringa
-  - organization: Booz-Allen and Hamilton
+    organization: Booz-Allen and Hamilton
 version: Revision A
