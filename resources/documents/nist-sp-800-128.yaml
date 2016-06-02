@@ -1,0 +1,12 @@
+id: nist-sp-800-128
+type: authoritative-document
+title: ' NIST SP 800-128, Guide for Security-Focused Configuration Management of Information
+  Systems'
+owner: NIST
+url: http://dx.doi.org/10.6028/NIST.SP.800-128
+authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-128
+format: pdf
+terms:
+- text: worksheet
+- text: configuration management
+- text: security impact worksheet
