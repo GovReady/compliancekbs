@@ -1,4 +1,5 @@
-id: Department of Defense SRG
+id: dod-aws-srg
+title: AWS Department of Defense SRG
 type: authoritative-document
 owner: Amazon Web Services
 url: https://d0.awsstatic.com/whitepapers/compliance/AWS_DOD_CSM_Reference_Architecture.pdf

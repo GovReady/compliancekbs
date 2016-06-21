@@ -1,7 +1,6 @@
 id: nist-sp-800-128
 type: authoritative-document
-title: ' NIST SP 800-128, Guide for Security-Focused Configuration Management of Information
-  Systems'
+title: 'NIST SP 800-128, Guide for Security-Focused Configuration Management of Information Systems'
 owner: NIST
 url: https://www.documentcloud.org/documents/2852018-nistspecialpublication800-128.html
 authoritative-url: http://dx.doi.org/10.6028/NIST.SP.800-128
