@@ -1,6 +1,7 @@
 id: Department of Defense SRG
 type: authoritative-document
+title: 'Department of Defense SRG'
 owner: Amazon Web Services
-url: https://d0.awsstatic.com/whitepapers/compliance/AWS_DOD_CSM_Reference_Architecture.pdf
+url: https://www.documentcloud.org/documents/2883801-Department-of-Defense-SRG.html
 authoritative-url: https://aws.amazon.com/compliance/dod/
 format: pdf
