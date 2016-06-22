@@ -1,5 +1,6 @@
 id: aws-architecure-and-security-recommendations
 type: authoritative-document
+title: 'AWS Architecture and Security Recommendations for FedRAMP Compliance'
 owner: Amazon Web Services
 url: https://www.documentcloud.org/documents/2876360-Aws-Architecture-and-Security-Recommendations.html
 authoritative-url: https://d0.awsstatic.com/whitepapers/aws-architecture-and-security-recommendations-for-fedramp-compliance.pdf
