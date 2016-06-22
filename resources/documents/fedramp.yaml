@@ -1,5 +1,6 @@
 id: FedRamp
 type: authoritative-document
+title: 'FedRAMP'
 owner: Amazon Web Services
 url: https://www.documentcloud.org/documents/2884398-FedRamp.html
 authoritative-url: https://aws.amazon.com/compliance/fedramp/
