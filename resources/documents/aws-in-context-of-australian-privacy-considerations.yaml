@@ -1,6 +1,11 @@
 id: aws-in-context-of-australian-privacy-considerations
+<<<<<<< HEAD
 type: authoritative-document
 title: 'Using AWS in the Context of Australian Privacy Considerations'
+=======
+title: Using AWS in the Context of Australian Privacy Considerations
+type: authoritative-document
+>>>>>>> 0a7681a77967915b97d4e6de362cff4f89eefb70
 owner: Amazon Web Services
 url: https://www.documentcloud.org/documents/2885214-Using-AWS-in-the-Context-of-Australian-Privacy.html
 authoritative-url: https://d0.awsstatic.com/whitepapers/compliance/Using_AWS_in_the_context_of_Australian_Privacy_Considerations.pdf

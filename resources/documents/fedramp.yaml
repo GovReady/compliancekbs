@@ -1,7 +1,8 @@
-id: FedRamp
+
+id: aws-fedramp-compliance-overview
 type: authoritative-document
-title: 'FedRAMP'
+title: AWS FedRAMP Compliance Overview
 owner: Amazon Web Services
 url: https://www.documentcloud.org/documents/2884398-FedRamp.html
 authoritative-url: https://aws.amazon.com/compliance/fedramp/
-format: pdf
+format: html

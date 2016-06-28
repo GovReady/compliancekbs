@@ -1,8 +1,6 @@
 id: nist-sp-800-36
 type: authoritative-document
-title: NIST SP 800-36, Guide to Selection Information Technology Security Products
-alt-titles:
-- '                                                                                     '
+title: 'NIST SP 800-36, Guide to Selection Information Technology Security Products'
 owner: NIST
 url: https://www.documentcloud.org/documents/2840725-NIST-SP-800-36-Guide-to-Selection-Information.html
 authoritative-url: http://csrc.nist.gov/publications/nistpubs/800-36/NIST-SP800-36.pdf
