@@ -8,32 +8,32 @@ authoritative-url: http://www.disa.mil/~/media/Files/DISA/News/Conference/CIF/Br
 format: pdf
 terms:
   - text: Security Requirements Guide
-    same-as: 
+    same-as:
       term: SRG
   - text: SRG
     page: 17
-    same-as: 
+    same-as:
       term: Security Requirements Guide
   - text: Security Technical Implementation Guide
-    same-as: 
+    same-as:
       term: STIG
   - text: STIG
     page: 3
-    same-as: 
+    same-as:
       term: Security Technical Implementation Guide
   - text: Control Correlation Identifier
     page: 16
-    same-as: 
+    same-as:
       term: CCI
   - text: CCI
-    same-as: 
+    same-as:
       term: Control Correlation Identifier
   - text: Security Content Automation Protocol
-    same-as: 
+    same-as:
       term: SCAP
   - text: SCAP
     page: 12
-    same-as: 
+    same-as:
       term: Security Content Automation Protocol
   - text: STIG Development Cycle
     page: 7
