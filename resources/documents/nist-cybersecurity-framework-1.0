@@ -1,0 +1,53 @@
+type: authoritative-document
+id: cybersecurity framework 1.0
+title: NIST Cybersecurity Framework 1.0
+alt-titles:
+  - "Framework for Improving Critical Infrastructure Cybersecurity Version 1.0"
+owner: NIST
+short-title: NIST Cybersecurity Framework 1.0
+url: https://www.documentcloud.org/documents/4064146-Cybersecurity-Framework-021214.html
+authoritative-url: https://www.nist.gov/sites/default/files/documents/cyberframework/cybersecurity-framework-021214.pdf
+format: pdf
+terms:
+- text: Glossary
+  page: 39
+- text: Category
+  page: 39
+- text: Critical Infrastructure
+  page: 39
+- text: Cybersecurity
+  page: 39
+- text: Cybersecurity Event
+  page: 39
+- text: Detect (function)
+  page: 39
+- text: Framework
+  page: 39
+- text: Framework Core
+  page: 39
+- text: Framework Implementation Tier
+  page: 39
+- text: Framework Profile
+  page: 39
+- text: Function
+  page: 39
+- text: Identify (function)
+  page: 40
+- text: Informative Reference
+  page: 40
+- text: Mobile Code
+  page: 40
+- text: Protect (function)
+  page: 40
+- text: Privileged User
+  page: 40
+- text: Recover (function)
+  page: 40
+- text: Respond (function)
+  page: 40
+- text: Risk
+  page: 40
+- text: Risk Management
+  page: 40
+- text: Subcategory
+  page: 40
