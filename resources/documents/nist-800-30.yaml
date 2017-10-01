@@ -1,0 +1,14 @@
+type: policy-document
+id: nist-800-30
+title: NIST Special Publication 800-30
+alt-titles:
+  - "Guide for Conducting Risk Assessments"
+owner: NIST
+short-title: NIST SP 800-30
+url: https://www.documentcloud.org/documents/4064145-nistspecialpublication800-30r1.html
+authoritative-url: http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-30r1.pdf
+terms:
+- text: Examples of Adverse Impact
+  page: 84
+- text: Impact
+  page: 84
