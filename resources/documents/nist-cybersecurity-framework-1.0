@@ -1,10 +1,10 @@
 type: authoritative-document
-id: cybersecurity framework 1.0
-title: NIST Cybersecurity Framework 1.0
+id: 'cybersecurity framework 1.0'
+title: 'NIST Cybersecurity Framework 1.0'
 alt-titles:
   - "Framework for Improving Critical Infrastructure Cybersecurity Version 1.0"
 owner: NIST
-short-title: NIST Cybersecurity Framework 1.0
+short-title: 'NIST Cybersecurity Framework 1.0'
 url: https://www.documentcloud.org/documents/4064146-Cybersecurity-Framework-021214.html
 authoritative-url: https://www.nist.gov/sites/default/files/documents/cyberframework/cybersecurity-framework-021214.pdf
 format: pdf
