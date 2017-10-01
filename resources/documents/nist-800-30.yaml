@@ -1,4 +1,4 @@
-type: policy-document
+type: authoritative-document
 id: nist-800-30
 title: NIST Special Publication 800-30
 alt-titles:
