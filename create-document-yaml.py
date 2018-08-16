@@ -10,7 +10,7 @@
 
 import sys, io, collections, os.path
 import urllib.request
-
+import ssl
 import rtyaml
 import PyPDF2
 
@@ -22,6 +22,8 @@ if len(sys.argv) < 3:
 
 resource_id, pdf_url = sys.argv[1:3]
 
+# Setup SSL context
+ssl._create_default_https_context = ssl._create_unverified_context
 # Fetch PDF.
 # Wrap the urlib.request data in a BytesIO to make it seekable.
 pdf = PyPDF2.PdfFileReader(io.BytesIO(urllib.request.urlopen(pdf_url).read()))
